@@ -1,0 +1,13 @@
+# Multi-instance snapclient service file
+[Unit]
+Description=Snapcast client
+After=sound.target
+Wants=avahi-daemon.service
+
+[Service]
+EnvironmentFile=/home/gnome/network/multizone-audio/etc/multizone-audio/snapclient-%i
+Type=simple
+ExecStart=/usr/bin/snapclient -h 127.0.0.1 $SNAPCLIENT_OPTS --hostID $HOST_ID
+
+[Install]
+WantedBy=multi-user.target

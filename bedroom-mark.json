@@ -1,0 +1,12 @@
+{
+    "host": "bedroom-mark",
+    "mopidy": {
+        "http_port": "6682",
+        "mpd_port": "6602"
+    },
+    "airplay": {
+        "port": "5002"
+    },
+
+    "end": true
+}

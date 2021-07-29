@@ -1,0 +1,12 @@
+{
+    "host": "kitchen",
+    "mopidy": {
+        "http_port": "6681",
+        "mpd_port": "6601"
+    },
+    "airplay": {
+        "port": "5001"
+    },
+
+    "end": true
+}

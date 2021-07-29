@@ -1,0 +1,12 @@
+{
+    "host": "canard",
+    "mopidy": {
+        "http_port": "6680",
+        "mpd_port": "6600"
+    },
+    "airplay": {
+        "port": "5000"
+    },
+
+    "end": true
+}

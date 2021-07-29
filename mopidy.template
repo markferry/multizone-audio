@@ -1,0 +1,58 @@
+[core]
+cache_dir = /home/gnome/.cache/mopidy
+config_dir = /etc/mopidy
+data_dir = /home/gnome/.config/mopidy/lib
+
+[logging]
+config_file = /etc/mopidy/logging.conf
+debug_file = /var/log/mopidy/mopidy-debug.log
+
+[file]
+enabled = true
+media_dirs =
+    /home/gnome/music/library
+
+[local]
+enabled = true
+media_dir = /home/gnome/music/library
+library = sqlite
+scan_flush_threshold = 100
+
+[m3u]
+enabled = true
+playlists_dir = /home/gnome/music/playlists
+
+[audio]
+output = audioresample ! audio/x-raw,rate=48000,channels=2,format=S16LE ! audioconvert ! wavenc ! filesink location=/tmp/mopidy.{{host}}
+
+[spotify]
+enabled = false
+# username =
+# password =
+# client_id =
+# client_secret =
+timeout = 60
+
+[http]
+enabled = true
+hostname = ::
+port = {{mopidy.http_port}}
+zeroconf = Mopidy server on $hostname
+
+[mpd]
+enabled = true
+hostname = ::
+port = {{mopidy.mpd_port}}
+
+## Plex DLNA server doesn't send DisplayName
+[dleyna]
+enabled = false
+# upnp_browse_limit = 500
+# upnp_lookup_limit = 20
+# upnp_search_limit = 100
+# dbus_start_session = dbus-daemon --fork --session --print-address=1 --print-pid=1
+
+[iris]
+country = GB
+locale = en_GB
+
