@@ -18,6 +18,8 @@ ALL_SNAPCLIENTS := \
 	snapclient-bedroom-mark \
 
 ALL_CONFIGS := \
+	../snapserver.conf \
+	\
 	mopidy.canard.conf \
 	mopidy.kitchen.conf \
 	mopidy.bedroom-mark.conf \
@@ -30,6 +32,9 @@ ALL_SERVICES := ${EXP_SERVICES}@$(EXP_HOSTS)
 
 all: $(ALL_CONFIGS)
 
+../snapserver.conf: snapserver.json snapserver.template $(CHEVRON)
+	$(CHEVRON) -d $< snapserver.template > $@
+
 mopidy.%.conf: %.json mopidy.template $(CHEVRON)
 	$(CHEVRON) -d $< mopidy.template > $@
 
@@ -39,7 +44,7 @@ snapclient-%: %.json snapclient.template $(CHEVRON)
 shairport-sync.%.conf: %.json shairport-sync.template $(CHEVRON)
 	$(CHEVRON) -d $< shairport-sync.template | grep -v '^//\|^$$' > $@ 
 
-snapserver: snapserver.conf
+snapserver: ../snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
 
 restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
@@ -65,8 +70,7 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 	systemctl $(SYSTEMCTL_USER) stop $(EXP_SERVICES)@$(HOST)
 
 # install the systemd unit files in the appropriate place
-install: snapserver.conf $(ALL_UNITS)
-	install -t ../ snapserver.conf
+install: $(ALL_UNITS)
 	install -t $(SYSTEMD_CONFIG_DIR) $^
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 

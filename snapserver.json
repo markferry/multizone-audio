@@ -1,0 +1,24 @@
+{
+    "hosts": [
+        {
+            "name": "canard",
+            "Name": "Canard",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+        },
+        {
+            "name": "kitchen",
+            "Name": "Kitchen",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+        },
+        {
+            "name": "bedroom-mark",
+            "Name": "Bedroom Mark",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+        }
+    ],
+
+    "party-zones": [
+        {"name": "party1", "Name": "Party 1"},
+        {"name": "party2", "Name": "Party 2"}
+    ]
+}

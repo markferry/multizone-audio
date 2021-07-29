@@ -124,34 +124,25 @@ doc_root = /usr/share/snapserver/snapweb
 
 stream = pipe:///tmp/cpipefifo?name=Barn Chromecast&sampleformat=44100:16:2&codec=flac
 
-# canard
-stream = pipe:///tmp/mopidy.canard?name=iris canard&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay canard&devicename=canard
-stream = librespot:///librespot?name=spotify canard&devicename=canard&bitrate=160
+{{#hosts}}
+# {{name}}
+stream = pipe:///tmp/mopidy.{{name}}?name=iris {{name}}&sampleformat=48000:16:2&codec=flac
+stream = airplay:///shairport-sync?name=airplay {{name}}&devicename={{name}}
+stream = librespot:///librespot?name=spotify {{name}}&devicename={{name}}&bitrate=160
 
-stream = meta:///spotify canard/airplay canard/iris canard?name=Canard
+stream = meta:///{{#streams}}{{stream}} {{name}}/{{/streams}}?name={{Name}}
 
-# kitchen
-stream = pipe:///tmp/mopidy.kitchen?name=iris kitchen&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay kitchen&devicename=kitchen
-stream = librespot:///librespot?name=spotify kitchen&devicename=kitchen&bitrate=160
+{{/hosts}}
 
-stream = meta:///spotify kitchen/airplay kitchen/iris kitchen?name=Kitchen
+{{#party-zones}}
+# {{Name}}
+stream = pipe:///tmp/mopidy.{{name}}?name=iris {{name}}&sampleformat=48000:16:2&codec=flac
+stream = airplay:///shairport-sync?name=airplay {{name}}&devicename={{Name}}
+stream = librespot:///librespot?name=spotify {{name}}&devicename={{Name}}&bitrate=160
 
-# bedroom-mark
-stream = pipe:///tmp/mopidy.bedroom-mark?name=iris bedroom-mark&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay bedroom-mark&devicename=bedroom-mark
-stream = librespot:///librespot?name=spotify bedroom-mark&devicename=bedroom-mark&bitrate=160
+stream = meta:///spotify {{name}}/airplay {{name}}/iris {{name}}/Barn Chromecast?name={{Name}}
 
-stream = meta:///spotify bedroom-mark/airplay bedroom-mark/iris bedroom-mark?name=Bedroom Mark
-
-# Party 1
-stream = pipe:///tmp/mopidy.party?name=iris party&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay party&devicename=party
-stream = librespot:///librespot?name=spotify party&devicename=party&bitrate=160
-
-stream = meta:///Barn Chromecast/spotify party/airplay party/iris party?name=Party
-
+{{/party-zones}}
 
 # Default sample format
 #sampleformat = 48000:16:2
