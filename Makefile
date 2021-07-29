@@ -4,12 +4,13 @@ CHEVRON := $(VENV)/bin/chevron
 SYSTEMCTL_USER := --user
 
 EXP_HOSTS := {canard,kitchen,bedroom-mark}
-EXP_SERVICES := {snapclient,mopidy,shairport-sync}
+EXP_SERVICES := {snapclient,mopidy,shairport-sync,librespot}
 
 ALL_UNITS := \
 	systemd/snapclient@.service \
 	systemd/mopidy@.service \
 	systemd/shairport-sync@.service \
+	systemd/librespot@.service \
 
 ALL_SNAPCLIENTS := \
 	snapclient-canard \

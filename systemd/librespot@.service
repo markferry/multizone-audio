@@ -1,0 +1,27 @@
+[Unit]
+Description=Librespot
+Wants=network-online.target
+After=network-online.target
+After=snapserver.service
+
+[Service]
+#User=nobody
+#Group=audio
+Restart=always
+RestartSec=10
+
+Environment="DEVICE_NAME=%i Spotify"
+Environment="BITRATE=160"
+Environment="CACHE_ARGS=--disable-audio-cache"
+#Environment="VOLUME_ARGS=--enable-volume-normalisation --initial-volume=100"
+Environment="BACKEND_ARGS=--backend pipe"
+EnvironmentFile=-/etc/default/raspotify
+
+# the pipe
+StandardOutput=file:/tmp/librespot.%i
+
+ExecStart=/usr/bin/librespot --name "$DEVICE_NAME" $BACKEND_ARGS --bitrate $BITRATE $CACHE_ARGS $VOLUME_ARGS $OPTIONS
+
+[Install]
+WantedBy=multi-user.target
+
