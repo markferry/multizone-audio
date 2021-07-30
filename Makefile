@@ -28,11 +28,21 @@ ALL_CONFIGS := \
 	shairport-sync.kitchen.conf \
 	shairport-sync.bedroom-mark.conf \
 
+ALL_NGINX := \
+	iris.canard.conf \
+	iris.kitchen.conf \
+	iris.bedroom-mark.conf \
+
 ALL_SERVICES := ${EXP_SERVICES}@$(EXP_HOSTS)
 
 all: $(ALL_CONFIGS)
 
-../snapserver.conf: snapserver.json snapserver.template $(CHEVRON)
+nginx: $(ALL_NGINX)
+
+iris.%.conf: %.json iris.template $(CHEVRON)
+	$(CHEVRON) -d $< iris.template > $@
+
+../snapserver.conf: players.json snapserver.template $(CHEVRON)
 	$(CHEVRON) -d $< snapserver.template > $@
 
 mopidy.%.conf: %.json mopidy.template $(CHEVRON)
