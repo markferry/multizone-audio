@@ -3,19 +3,19 @@
         {
             "name": "canard",
             "Name": "Canard",
-            "airplay_port": "5000",
+            "airplay_port": "5100",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         },
         {
             "name": "kitchen",
             "Name": "Kitchen",
-            "airplay_port": "5001",
+            "airplay_port": "5101",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         },
         {
             "name": "bedroom-mark",
             "Name": "Bedroom Mark",
-            "airplay_port": "5002",
+            "airplay_port": "5102",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         }
     ],
@@ -24,12 +24,12 @@
         {
             "name": "party1",
             "Name": "Party 1",
-            "airplay_port": "5011"
+            "airplay_port": "5111"
         },
         {
             "name": "party2",
             "Name": "Party 2",
-            "airplay_port": "5012"
+            "airplay_port": "5112"
         }
     ]
 }

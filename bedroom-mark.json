@@ -5,7 +5,7 @@
         "mpd_port": "6602"
     },
     "airplay": {
-        "port": "5002"
+        "port": "5102"
     },
 
     "end": true
