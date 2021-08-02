@@ -7,6 +7,9 @@
     "airplay": {
         "port": "5100"
     },
+    "mqtt": {
+        "host": "localhost"
+    },
 
     "end": true
 }
