@@ -51,4 +51,13 @@ commands: ```
 playpause, play, stop, playresume, shuffle_songs, volumedown, volumeup
 ```
 
+# Kodi
+
+## State
+```
+ha/study/media/status/playbackstate {"kodi_state": "stopped", "kodi_playertype": "video", "val": 0, "kodi_playerid": 1}
+```
+
+## Control
+media/command/playbackstate "pause"
 
