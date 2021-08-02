@@ -11,6 +11,7 @@ ALL_UNITS := \
 	systemd/mopidy@.service \
 	systemd/shairport-sync@.service \
 	systemd/librespot@.service \
+	controller/multizone-audio-control.service \
 
 ALL_SNAPCLIENTS := \
 	snapclient-canard \
@@ -57,13 +58,16 @@ shairport-sync.%.conf: %.json shairport-sync.template $(CHEVRON)
 snapserver: ../snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
 
+controller: install controller/multizone-control.py
+	systemctl $(SYSTEMCTL_USER) restart multizone-audio-control
+
 restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 	systemctl $(SYSTEMCTL_USER) restart $(ALL_SERVICES)
 
 restart-host:
 	systemctl $(SYSTEMCTL_USER) restart $(EXP_SERVICES)@$(HOST)
 
-start: restart
+start: restart snapserver controller
 
 start-host: restart-host
 

@@ -1,0 +1,12 @@
+[Unit]
+Description=Multizone Controller
+After=network.target
+
+[Service]
+ExecStart=/home/gnome/.venvs/mopidy/bin/python /home/gnome/network/multizone-audio/etc/multizone-audio/controller/multizone-control.py
+#User=mopidy
+#Group=mopidy
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
