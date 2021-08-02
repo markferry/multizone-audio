@@ -1,6 +1,7 @@
 {
     "host": "kitchen",
     "mopidy": {
+        "host": "localhost",
         "http_port": "6681",
         "mpd_port": "6601"
     },

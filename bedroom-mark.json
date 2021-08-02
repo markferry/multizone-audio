@@ -1,6 +1,7 @@
 {
     "host": "bedroom-mark",
     "mopidy": {
+        "host": "localhost",
         "http_port": "6682",
         "mpd_port": "6602"
     },

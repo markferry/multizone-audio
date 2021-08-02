@@ -1,6 +1,7 @@
 {
     "host": "canard",
     "mopidy": {
+        "host": "localhost",
         "http_port": "6680",
         "mpd_port": "6600"
     },

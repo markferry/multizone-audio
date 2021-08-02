@@ -10,7 +10,7 @@ server {
     }
 
     location / {
-        proxy_pass http://127.0.0.1:{{mopidy.http_port}};
+        proxy_pass http://{{mopidy.host}}:{{mopidy.http_port}};
         proxy_set_header Host $host;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
