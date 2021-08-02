@@ -1,21 +1,31 @@
 {
+    "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
     "hosts": [
         {
             "name": "canard",
             "Name": "Canard",
-            "airplay_port": "5100",
+            "airplay": {
+                "port": "5100"
+            },
+            "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         },
         {
             "name": "kitchen",
             "Name": "Kitchen",
-            "airplay_port": "5101",
+            "airplay": {
+                "port": "5101"
+            },
+            "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         },
         {
             "name": "bedroom-mark",
             "Name": "Bedroom Mark",
-            "airplay_port": "5102",
+            "airplay": {
+                "port": "5102"
+            },
+            "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
         }
     ],
@@ -24,12 +34,18 @@
         {
             "name": "party1",
             "Name": "Party 1",
-            "airplay_port": "5111"
+            "airplay": {
+                "port": "5111"
+            },
+            "spotify_event": "librespot-event.sh"
         },
         {
             "name": "party2",
             "Name": "Party 2",
-            "airplay_port": "5112"
+            "airplay": {
+                "port": "5112"
+            },
+            "spotify_event": "librespot-event.sh"
         }
     ]
 }
