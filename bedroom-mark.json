@@ -22,6 +22,11 @@
     "mqtt": {
         "host": "localhost"
     },
+    "snapcast": {
+        "_host": "media.home.whalebarn.com",
+        "host": "localhost",
+        "opts": ""
+    },
 
     "end": true
 }

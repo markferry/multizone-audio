@@ -18,7 +18,8 @@ START_SNAPCLIENT=true
 #   --hostID arg                    unique host id
 
 USER_OPTS="--user snapclient:audio"
+HOST="{{snapcast.host}}"
 HOST_ID="{{name}}"
 
 # HDMI - instance ID is added by the systemd unit
-SNAPCLIENT_OPTS=""
+SNAPCLIENT_OPTS="{{snapcast.opts}}"
