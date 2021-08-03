@@ -1,4 +1,6 @@
-SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
+DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
+LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
+
 VENV := ~/.venvs/chevron
 CHEVRON := $(VENV)/bin/chevron
 SYSTEMCTL_USER := --user
@@ -6,9 +8,14 @@ SYSTEMCTL_USER := --user
 EXP_HOSTS := {canard,kitchen,bedroom-mark}
 EXP_SERVICES := {snapclient,mopidy}
 
-ALL_UNITS := \
-	systemd/snapclient@.service \
-	systemd/mopidy@.service \
+DEV_UNITS := \
+	$(DEV_SYSTEMD_CONFIG_DIR)/snapclient@.service \
+	$(DEV_SYSTEMD_CONFIG_DIR)/mopidy@.service \
+	$(DEV_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
+
+DEBIAN_UNITS := \
+	$(LIVE_SYSTEMD_CONFIG_DIR)/mopidy@.service \
+	$(LIVE_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
 
 ALL_MOPIDY := \
 	mopidy.canard.conf \
@@ -33,11 +40,18 @@ ALL_NGINX := \
 ALL_CONFIGS := \
 	../snapserver.conf \
 	snapcast-autoconfig.yaml \
-	$(ALL_UNITS) \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
 	$(ALL_SNAPCLIENTS) \
+
+DEV_CONFIGS := \
+	dev/snapclient@.service \
+	dev/mopidy@.service \
+
+LIVE_CONFIGS := \
+	debian/snapclient@.service \
+	debian/mopidy@.service \
 
 ALL_SERVICES := ${EXP_SERVICES}@$(EXP_HOSTS)
 
@@ -45,7 +59,16 @@ all: $(ALL_CONFIGS)
 
 nginx: $(ALL_NGINX)
 
-systemd/%.service: templates/%.service.template players.json $(CHEVRON)
+dev/%.service: templates/dev/%.service.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
+
+dev/%.service: templates/%.service.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
+
+debian/%.service: templates/debian/%.service.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
+
+debian/%.service: templates/%.service.template players.json $(CHEVRON)
 	$(CHEVRON) -d players.json $<  > $@
 
 ../snapserver.conf: templates/snapserver.template players.json $(CHEVRON)
@@ -66,10 +89,11 @@ shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
 iris.%.conf: %.json templates/iris.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/iris.template > $@
 
+
 snapserver: ../snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
 
-controller: install controller/multizone-control.py
+controller: controller/multizone-control.py
 	systemctl $(SYSTEMCTL_USER) restart multizone-audio-control
 
 restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
@@ -95,11 +119,30 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 	systemctl $(SYSTEMCTL_USER) stop $(EXP_SERVICES)@$(HOST)
 
 # install the systemd unit files in the appropriate place
-install: $(ALL_UNITS) controller/multizone-audio-control.service
-	install -t $(SYSTEMD_CONFIG_DIR) $^
+
+dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
+
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: dev/%.service
+	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
+
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
+	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
+
+dev-install: dev $(DEV_UNITS)
+	systemctl $(SYSTEMCTL_USER) daemon-reload
+
+debian: $(ALL_CONFIGS) $(DEBIAN_CONFIGS)
+
+$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: debian/%.service
+	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
+
+$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
+	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
+
+debian-install: debian $(DEBIAN_UNITS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
 clean:
-	@rm $(ALL_CONFIGS)
+	-rm $(ALL_CONFIGS)
 
-.PHONY: clean install status stop
+.PHONY: clean install status stop controller
