@@ -128,6 +128,7 @@ doc_root = /usr/share/snapserver/snapweb
 #stream = pipe:///tmp/snapfifo?name=default
 #stream = tcp://127.0.0.1?name=mopidy_tcp
 
+stream = pipe:///tmp/snapfifo0?name=Iris&sampleformat=48000:16:2&codec=flac
 stream = pipe:///tmp/cpipefifo?name=Barn Chromecast&sampleformat=44100:16:2&codec=flac
 
 {{#hosts}}
