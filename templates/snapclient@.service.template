@@ -5,7 +5,7 @@ After=sound.target
 Wants=avahi-daemon.service
 
 [Service]
-EnvironmentFile=/home/gnome/network/multizone-audio/etc/multizone-audio/snapclient-%i
+EnvironmentFile={{config_root}}/snapclient-%i
 Type=simple
 ExecStart=/usr/bin/snapclient -h $HOST $SNAPCLIENT_OPTS --hostID $HOST_ID
 

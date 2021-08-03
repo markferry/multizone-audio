@@ -5,7 +5,7 @@ Wants=network-online.target
 After=network.target network-online.target
 
 [Service]
-ExecStart=/usr/bin/shairport-sync -c /home/gnome/network/multizone-audio/etc/multizone-audio/shairport-sync.%i.conf
+ExecStart=/usr/bin/shairport-sync -c {{config_root}}/shairport-sync.%i.conf
 #User=shairport-sync
 #Group=shairport-sync
 

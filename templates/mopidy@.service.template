@@ -11,7 +11,7 @@ After=sound.target
 
 [Service]
 #User=mopidy
-ExecStart=/home/gnome/.venvs/mopidy/bin/python /usr/bin/mopidy --config /usr/share/mopidy/conf.d:/home/gnome/network/multizone-audio/etc/multizone-audio/mopidy.%i.conf
+ExecStart={{python_venv}} /usr/bin/mopidy --config /usr/share/mopidy/conf.d:{{config_root}}/mopidy.%i.conf
 
 [Install]
 WantedBy=multi-user.target

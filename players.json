@@ -1,5 +1,9 @@
 {
     "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
+    "_config_root": "/etc/multizone-audio",
+    "python_venv": "/home/gnome/.venvs/mopidy/bin/python",
+    "_python_venv": "",
+
     "hosts": [
         {
             "name": "canard",
