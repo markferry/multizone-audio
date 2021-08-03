@@ -35,6 +35,7 @@ ALL_NGINX := \
 
 ALL_CONFIGS := \
 	../snapserver.conf \
+	$(ALL_UNITS) \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
@@ -48,6 +49,9 @@ nginx: $(ALL_NGINX)
 
 iris.%.conf: %.json templates/iris.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/iris.template > $@
+
+systemd/%.service: templates/%.service.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
 
 ../snapserver.conf: players.json templates/snapserver.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/snapserver.template > $@
