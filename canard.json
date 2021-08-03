@@ -24,7 +24,7 @@
     },
     "snapcast": {
         "_host": "media.home.whalebarn.com",
-        "host": "localhost",
+        "host": "127.0.0.1",
         "opts": ""
     },
 
