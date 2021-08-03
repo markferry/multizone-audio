@@ -9,8 +9,6 @@ EXP_SERVICES := {snapclient,mopidy}
 ALL_UNITS := \
 	systemd/snapclient@.service \
 	systemd/mopidy@.service \
-	systemd/shairport-sync@.service \
-	systemd/librespot@.service \
 
 ALL_MOPIDY := \
 	mopidy.canard.conf \
