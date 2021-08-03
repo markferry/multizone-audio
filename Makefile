@@ -34,6 +34,7 @@ ALL_NGINX := \
 
 ALL_CONFIGS := \
 	../snapserver.conf \
+	snapcast-autoconfig.yaml \
 	$(ALL_UNITS) \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
@@ -46,14 +47,14 @@ all: $(ALL_CONFIGS)
 
 nginx: $(ALL_NGINX)
 
-iris.%.conf: %.json templates/iris.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/iris.template > $@
-
 systemd/%.service: templates/%.service.template players.json $(CHEVRON)
 	$(CHEVRON) -d players.json $<  > $@
 
-../snapserver.conf: players.json templates/snapserver.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/snapserver.template > $@
+../snapserver.conf: templates/snapserver.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
+
+snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
 
 mopidy.%.conf: %.json templates/mopidy.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/mopidy.template > $@
@@ -63,6 +64,9 @@ snapclient.%.conf: %.json templates/snapclient.template $(CHEVRON)
 
 shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+
+iris.%.conf: %.json templates/iris.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/iris.template > $@
 
 snapserver: ../snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver

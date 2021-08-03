@@ -1,0 +1,17 @@
+---
+loglevel: debug
+server: tcp://localhost:1705
+streams:
+  {{#hosts}}
+  {{Name}}:
+    clients:
+      - {{name}}
+  {{/hosts}}
+
+  {{#party-zones}}
+  {{Name}}:
+    clients:
+      {{#clients}}
+      - {{.}}
+      {{/clients}}
+  {{/party-zones}}

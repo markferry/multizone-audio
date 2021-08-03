@@ -41,7 +41,9 @@
             "airplay": {
                 "port": "5111"
             },
-            "spotify_event": "librespot-event.sh"
+            "spotify_event": "librespot-event.sh",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],
+            "clients": [ "canard", "kitchen" ]
         },
         {
             "name": "party2",
@@ -49,7 +51,9 @@
             "airplay": {
                 "port": "5112"
             },
-            "spotify_event": "librespot-event.sh"
+            "spotify_event": "librespot-event.sh",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],
+            "clients": [ "ballroom", "outside" ]
         }
     ]
 }
