@@ -120,18 +120,11 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 
 # install the systemd unit files in the appropriate place
 
-dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
-
 $(DEV_SYSTEMD_CONFIG_DIR)/%.service: dev/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
 $(DEV_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
-
-dev-install: dev $(DEV_UNITS)
-	systemctl $(SYSTEMCTL_USER) daemon-reload
-
-debian: $(ALL_CONFIGS) $(DEBIAN_CONFIGS)
 
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: debian/%.service
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
@@ -139,7 +132,14 @@ $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: debian/%.service
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
 
-debian-install: debian $(DEBIAN_UNITS)
+dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
+
+dev-install: dev $(DEV_UNITS)
+	systemctl $(SYSTEMCTL_USER) daemon-reload
+
+debian: $(ALL_CONFIGS) $(DEBIAN_CONFIGS)
+
+live-install: debian $(DEBIAN_UNITS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
 clean:
