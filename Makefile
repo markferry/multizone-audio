@@ -11,7 +11,6 @@ ALL_UNITS := \
 	systemd/mopidy@.service \
 	systemd/shairport-sync@.service \
 	systemd/librespot@.service \
-	controller/multizone-audio-control.service \
 
 ALL_MOPIDY := \
 	mopidy.canard.conf \
@@ -94,7 +93,11 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 	systemctl $(SYSTEMCTL_USER) stop $(EXP_SERVICES)@$(HOST)
 
 # install the systemd unit files in the appropriate place
-install: $(ALL_UNITS)
+install: $(ALL_UNITS) controller/multizone-audio-control.service
 	install -t $(SYSTEMD_CONFIG_DIR) $^
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
+clean:
+	@rm $(ALL_CONFIGS)
+
+.PHONY: clean install status stop
