@@ -6,7 +6,7 @@
 // General Settings
 general =
 {
-	name = "{{host}}"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+	name = "{{name}}"; // overridden by snapserver
 //		The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
 //		You can use the following substitutions:
 //				%h for the hostname,
@@ -19,7 +19,7 @@ general =
 //	output_backend = "alsa"; // Run "shairport-sync -h" to get a list of all output_backends, e.g. "alsa", "pipe", "stdout". The default is the first one.
 //	mdns_backend = "avahi"; // Run "shairport-sync -h" to get a list of all mdns_backends. The default is the first one.
 //	interface = "name"; // Use this advanced setting to specify the interface on which Shairport Sync should provide its service. Leave it commented out to get the default, which is to select the interface(s) automatically.
-	port = {{airplay.port}}; // Listen for service requests on this port
+	port = {{airplay.port}}; // overridden by snapserver
 //	udp_port_base = 6001; // start allocating UDP ports from this port number when needed
 //	udp_port_range = 10; // look for free ports in this number of places, starting at the UDP port base. Allow at least 10, though only three are needed in a steady state.
 //	regtype = "_raop._tcp"; // Use this advanced setting to set the service type and transport to be advertised by Zeroconf/Bonjour. Default is "_raop._tcp".
@@ -160,7 +160,7 @@ jack =
 // --with-pipe
 pipe =
 {
-	name = "/tmp/shairport-sync-audio.{{host}}"; // this is the default
+//	name = "/tmp/shairport-sync-audio.{{name}}"; // set by snapserver
 };
 
 // There are no configuration file parameters for the "stdout" audio back end. No interpolation is done.
@@ -211,7 +211,7 @@ metadata =
 //	enabled = "yes"; // set this to yes to get Shairport Sync to solicit metadata from the source and to pass it on via a pipe
 //	include_cover_art = "yes"; // set to "yes" to get Shairport Sync to solicit cover art from the source and pass it via the pipe. You must also set "enabled" to "yes".
 //	cover_art_cache_directory = "/tmp/shairport-sync/.cache/coverart"; // artwork will be  stored in this directory if the dbus or MPRIS interfaces are enabled or if the MQTT client is in use. Set it to "" to prevent caching, which may be useful on some systems
-	pipe_name = "/tmp/shairport-sync-metadata.{{host}}";
+//	pipe_name = "/tmp/shairport-sync-metadata.{{name}}";  // overridden by snapserver
 //	pipe_timeout = 5000; // wait for this number of milliseconds for a blocked pipe to unblock before giving up
 //	socket_address = "226.0.0.1"; // if set to a host name or IP address, UDP packets containing metadata will be sent to this address. May be a multicast address. "socket-port" must be non-zero and "enabled" must be set to yes"
 //	socket_port = 5555; // if socket_address is set, the port to send UDP packets to
@@ -232,7 +232,7 @@ mqtt =
 //	cafile = NULL; //this may be used as an (exclusive) alternative to capath with a single file for all ca-certificates
 //	certfile = NULL; //set this to a string to a user certificate to enable MQTT Client certificates. keyfile must also be set!
 //	keyfile = NULL; //private key for MQTT Client authentication
-	topic = "media/{{host}}/airplay";
+	topic = "media/{{name}}/airplay";
 //	publish_raw = "no"; //whether to publish all available metadata under the codes given in the 'metadata' docs.
 	publish_parsed = "yes";
 //	Currently published topics:artist,album,title,genre,format,songalbum,volume,client_ip,

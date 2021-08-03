@@ -1,29 +1,29 @@
 [core]
-cache_dir = /home/gnome/.cache/mopidy
+cache_dir = {{path.media-root}}/{{path.music-metadata}}/mopidy/cache
 config_dir = /etc/mopidy
-data_dir = /home/gnome/.config/mopidy/lib
+data_dir = {{path.media-root}}/{{path.music-metadata}}/mopidy/lib
 
 [logging]
 config_file = /etc/mopidy/logging.conf
-debug_file = /var/log/mopidy/mopidy-debug.log
+debug_file = /var/log/mopidy/mopidy-debug.{{name}}.log
 
 [file]
 enabled = true
 media_dirs =
-    /home/gnome/music/library
+    {{path.media-root}}/music/library
 
 [local]
 enabled = true
-media_dir = /home/gnome/music/library
+media_dir = {{path.media-root}}/music/library
 library = sqlite
 scan_flush_threshold = 100
 
 [m3u]
 enabled = true
-playlists_dir = /home/gnome/music/playlists
+playlists_dir = {{path.media-root}}/{{path.music-metadata}}/playlists
 
 [audio]
-output = audioresample ! audio/x-raw,rate=48000,channels=2,format=S16LE ! audioconvert ! wavenc ! filesink location=/tmp/mopidy.{{host}}
+output = audioresample ! audio/x-raw,rate=48000,channels=2,format=S16LE ! audioconvert ! wavenc ! filesink location=/tmp/mopidy.{{name}}
 
 [spotify]
 enabled = false
@@ -44,7 +44,6 @@ enabled = true
 hostname = ::
 port = {{mopidy.mpd_port}}
 
-## Plex DLNA server doesn't send DisplayName
 [dleyna]
 enabled = false
 # upnp_browse_limit = 500
@@ -59,4 +58,4 @@ locale = en_GB
 [mqtt]
 host = {{mqtt.host}}
 port = 1883
-topic = media/{{host}}/mopidy
+topic = media/{{name}}/mopidy
