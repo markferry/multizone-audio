@@ -133,21 +133,22 @@ stream = pipe:///tmp/cpipefifo?name=Barn Chromecast&sampleformat=44100:16:2&code
 
 {{#hosts}}
 # {{name}}
-stream = pipe:///tmp/mopidy.{{name}}?name=iris {{name}}&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay {{name}}&devicename={{name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=spotify {{name}}&devicename={{name}}&bitrate=160&onevent={{config_root}}/{{spotify_event}}%20{{name}}
+stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
+stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{name}}&bitrate=160&onevent={{config_root}}/{{spotify_event}}%20{{name}}
 
-stream = meta:///{{#streams}}{{stream}} {{name}}/{{/streams}}?name={{Name}}
+stream = meta:///{{#streams}}- {{name}} {{stream}}/{{/streams}}?name={{Name}}
 
 {{/hosts}}
 
 {{#party-zones}}
 # {{Name}}
-stream = pipe:///tmp/mopidy.{{name}}?name=iris {{name}}&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=airplay {{name}}&devicename={{name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=spotify {{name}}&devicename={{name}}&bitrate=160&onevent={{config_root}}/{{spotify_event}}%20{{name}}
+stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
+stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{name}}&bitrate=160&onevent={{config_root}}/{{spotify_event}}%20{{name}}
 
-stream = meta:///spotify {{name}}/airplay {{name}}/iris {{name}}/Barn Chromecast?name={{Name}}
+#stream = meta:///spotify {{name}}/airplay {{name}}/iris {{name}}/Barn Chromecast?name={{Name}}
+stream = meta:///{{#streams}}- {{name}} {{stream}}/{{/streams}}/Barn Chromecast?name={{Name}}
 
 {{/party-zones}}
 
