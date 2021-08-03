@@ -1,5 +1,5 @@
 {
-    "name": "bedroom-mark",
+    "name": "library",
 
     "path": {
         "media-root": "/mnt/md6-media",
@@ -13,11 +13,11 @@
     "mopidy": {
         "host": "media.home.whalebarn.com",
         "_host": "localhost",
-        "http_port": "6692",
-        "mpd_port": "6612"
+        "http_port": "6687",
+        "mpd_port": "6607"
     },
     "airplay": {
-        "port": "5112"
+        "port": "5107"
     },
     "mqtt": {
         "host": "localhost"
@@ -25,7 +25,8 @@
     "snapcast": {
         "host": "media.home.whalebarn.com",
         "_host": "127.0.0.1",
-        "opts": ""
+        "opts": "-s Device",
+        "_opts": ""
     },
 
     "end": true

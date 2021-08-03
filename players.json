@@ -1,15 +1,24 @@
 {
-    "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
-    "_config_root": "/etc/multizone-audio",
-    "python_venv": "/home/gnome/.venvs/mopidy/bin/python",
-    "_python_venv": "",
+    "_config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
+    "config_root": "/etc/multizone-audio",
+    "_python_venv": "/home/gnome/.venvs/mopidy/bin/python",
+    "python_venv": "",
 
     "hosts": [
         {
-            "name": "canard",
-            "Name": "Canard",
+            "name": "library",
+            "Name": "Library",
             "airplay": {
-                "port": "5100"
+                "port": "5107"
+            },
+            "spotify_event": "librespot-event.sh",
+            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+        },
+        {
+            "name": "outside",
+            "Name": "Outside",
+            "airplay": {
+                "port": "5110"
             },
             "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
@@ -18,7 +27,7 @@
             "name": "kitchen",
             "Name": "Kitchen",
             "airplay": {
-                "port": "5101"
+                "port": "5111"
             },
             "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
@@ -27,7 +36,7 @@
             "name": "bedroom-mark",
             "Name": "Bedroom Mark",
             "airplay": {
-                "port": "5102"
+                "port": "5112"
             },
             "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
@@ -39,7 +48,7 @@
             "name": "party1",
             "Name": "Party 1",
             "airplay": {
-                "port": "5111"
+                "port": "5101"
             },
             "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],
@@ -49,7 +58,7 @@
             "name": "party2",
             "Name": "Party 2",
             "airplay": {
-                "port": "5112"
+                "port": "5102"
             },
             "spotify_event": "librespot-event.sh",
             "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],

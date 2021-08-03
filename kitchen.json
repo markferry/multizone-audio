@@ -1,32 +1,32 @@
 {
     "name": "kitchen",
 
-    "_path": {
+    "path": {
         "media-root": "/mnt/md6-media",
         "music-metadata": "music/metadata"
     },
-    "path": {
+    "_path": {
         "media-root": "/home/gnome",
         "music-metadata": ".cache"
     },
 
     "mopidy": {
-        "_host": "media.home.whalebarn.com",
-        "host": "localhost",
-        "http_port": "6681",
-        "mpd_port": "6601"
+        "host": "media.home.whalebarn.com",
+        "_host": "localhost",
+        "http_port": "6691",
+        "mpd_port": "6611"
     },
     "airplay": {
-        "port": "5101"
+        "port": "5111"
     },
     "mqtt": {
         "host": "localhost"
     },
     "snapcast": {
-        "_host": "media.home.whalebarn.com",
-        "host": "127.0.0.1",
-        "_opts": "-s Device",
-        "opts": ""
+        "host": "media.home.whalebarn.com",
+        "_host": "127.0.0.1",
+        "opts": "-s Device",
+        "_opts": ""
     },
 
     "end": true

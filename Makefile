@@ -5,7 +5,14 @@ VENV := ~/.venvs/chevron
 CHEVRON := $(VENV)/bin/chevron
 SYSTEMCTL_USER := --user
 
-EXP_HOSTS := {canard,kitchen,bedroom-mark}
+EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
+
+ALL_HOSTS := \
+	kitchen \
+	library \
+	outside \
+	bedroom-mark \
+
 EXP_SERVICES := {snapclient,mopidy}
 
 DEV_UNITS := \
@@ -17,25 +24,10 @@ DEBIAN_UNITS := \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/mopidy@.service \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
 
-ALL_MOPIDY := \
-	mopidy.canard.conf \
-	mopidy.kitchen.conf \
-	mopidy.bedroom-mark.conf \
-
-ALL_AIRPLAY := \
-	shairport-sync.canard.conf \
-	shairport-sync.kitchen.conf \
-	shairport-sync.bedroom-mark.conf \
-
-ALL_SNAPCLIENTS := \
-	snapclient.canard.conf \
-	snapclient.kitchen.conf \
-	snapclient.bedroom-mark.conf \
-
-ALL_NGINX := \
-	iris.canard.conf \
-	iris.kitchen.conf \
-	iris.bedroom-mark.conf \
+ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_HOSTS))
+ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
+ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
+ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
 
 ALL_CONFIGS := \
 	../snapserver.conf \
@@ -53,7 +45,7 @@ LIVE_CONFIGS := \
 	debian/snapclient@.service \
 	debian/mopidy@.service \
 
-ALL_SERVICES := ${EXP_SERVICES}@$(EXP_HOSTS)
+ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
 
 all: $(ALL_CONFIGS)
 
