@@ -13,26 +13,32 @@ ALL_UNITS := \
 	systemd/librespot@.service \
 	controller/multizone-audio-control.service \
 
+ALL_MOPIDY := \
+	mopidy.canard.conf \
+	mopidy.kitchen.conf \
+	mopidy.bedroom-mark.conf \
+
+ALL_AIRPLAY := \
+	shairport-sync.canard.conf \
+	shairport-sync.kitchen.conf \
+	shairport-sync.bedroom-mark.conf \
+
 ALL_SNAPCLIENTS := \
 	snapclient-canard \
 	snapclient-kitchen \
 	snapclient-bedroom-mark \
 
-ALL_CONFIGS := \
-	../snapserver.conf \
-	\
-	mopidy.canard.conf \
-	mopidy.kitchen.conf \
-	mopidy.bedroom-mark.conf \
-	\
-	shairport-sync.canard.conf \
-	shairport-sync.kitchen.conf \
-	shairport-sync.bedroom-mark.conf \
-
 ALL_NGINX := \
 	iris.canard.conf \
 	iris.kitchen.conf \
 	iris.bedroom-mark.conf \
+
+ALL_CONFIGS := \
+	../snapserver.conf \
+	$(ALL_MOPIDY) \
+	$(ALL_AIRPLAY) \
+	$(ALL_NGINX) \
+	$(ALL_SNAPCLIENTS) \
 
 ALL_SERVICES := ${EXP_SERVICES}@$(EXP_HOSTS)
 
