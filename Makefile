@@ -46,20 +46,20 @@ all: $(ALL_CONFIGS)
 
 nginx: $(ALL_NGINX)
 
-iris.%.conf: %.json iris.template $(CHEVRON)
-	$(CHEVRON) -d $< iris.template > $@
+iris.%.conf: %.json templates/iris.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/iris.template > $@
 
-../snapserver.conf: players.json snapserver.template $(CHEVRON)
-	$(CHEVRON) -d $< snapserver.template > $@
+../snapserver.conf: players.json templates/snapserver.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/snapserver.template > $@
 
-mopidy.%.conf: %.json mopidy.template $(CHEVRON)
-	$(CHEVRON) -d $< mopidy.template > $@
+mopidy.%.conf: %.json templates/mopidy.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/mopidy.template > $@
 
-snapclient-%: %.json snapclient.template $(CHEVRON)
-	$(CHEVRON) -d $< snapclient.template > $@
+snapclient-%: %.json templates/snapclient.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/snapclient.template > $@
 
-shairport-sync.%.conf: %.json shairport-sync.template $(CHEVRON)
-	$(CHEVRON) -d $< shairport-sync.template | grep -v '^//\|^$$' > $@ 
+shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
 
 snapserver: ../snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
