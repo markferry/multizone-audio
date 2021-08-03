@@ -5,9 +5,9 @@ After=sound.target
 Wants=avahi-daemon.service
 
 [Service]
-EnvironmentFile={{config_root}}/snapclient-%i
+EnvironmentFile={{config_root}}/snapclient.%i.conf
 Type=simple
-ExecStart=/usr/bin/snapclient -h $HOST $SNAPCLIENT_OPTS --hostID $HOST_ID
+ExecStart=/usr/bin/snapclient --logsink=system $SNAPCLIENT_OPTS
 
 [Install]
 WantedBy=multi-user.target
