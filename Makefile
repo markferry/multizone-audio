@@ -24,9 +24,9 @@ ALL_AIRPLAY := \
 	shairport-sync.bedroom-mark.conf \
 
 ALL_SNAPCLIENTS := \
-	snapclient-canard \
-	snapclient-kitchen \
-	snapclient-bedroom-mark \
+	snapclient.canard.conf \
+	snapclient.kitchen.conf \
+	snapclient.bedroom-mark.conf \
 
 ALL_NGINX := \
 	iris.canard.conf \
@@ -59,7 +59,7 @@ systemd/%.service: templates/%.service.template players.json $(CHEVRON)
 mopidy.%.conf: %.json templates/mopidy.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/mopidy.template > $@
 
-snapclient-%: %.json templates/snapclient.template $(CHEVRON)
+snapclient.%.conf: %.json templates/snapclient.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/snapclient.template > $@
 
 shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
