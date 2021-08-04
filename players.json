@@ -30,7 +30,8 @@
                 "port": "5111"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": ["spotify", "airplay", "iris"]
+            "streams": ["spotify", "airplay", "iris"],
+            "other_streams": ["Barn Chromecast"]
         },
         {
             "name": "bedroom-mark",
