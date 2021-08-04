@@ -6,6 +6,8 @@ streams:
   {{Name}}:
     clients:
       - {{name}}
+    volume:
+      {{name}}: 50
   {{/hosts}}
 
   {{#party-zones}}
@@ -13,5 +15,9 @@ streams:
     clients:
       {{#clients}}
       - {{.}}
+      {{/clients}}
+    volume:
+      {{#clients}}
+      {{.}}: 50
       {{/clients}}
   {{/party-zones}}
