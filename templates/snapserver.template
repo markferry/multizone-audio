@@ -147,7 +147,7 @@ stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:
 stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
 stream = librespot:///librespot?name=- {{name}} spotify&devicename={{name}}&bitrate=160&onevent={{config_root}}/{{spotify_event}}%20{{name}}
 
-stream = meta:///{{#streams}}- {{name}} {{.}}/{{/streams}}/Barn Chromecast?name={{Name}}
+stream = meta:///{{#streams}}- {{name}} {{.}}/{{/streams}}Barn Chromecast?name={{Name}}
 
 {{/party-zones}}
 
