@@ -12,7 +12,7 @@
                 "port": "5107"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+            "streams": ["spotify", "airplay", "iris"]
         },
         {
             "name": "outside",
@@ -21,7 +21,7 @@
                 "port": "5110"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+            "streams": ["spotify", "airplay", "iris"]
         },
         {
             "name": "kitchen",
@@ -30,7 +30,7 @@
                 "port": "5111"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+            "streams": ["spotify", "airplay", "iris"]
         },
         {
             "name": "bedroom-mark",
@@ -39,7 +39,7 @@
                 "port": "5112"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}]
+            "streams": ["spotify", "airplay", "iris"]
         }
     ],
 
@@ -51,7 +51,7 @@
                 "port": "5101"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],
+            "streams": ["spotify", "airplay", "iris"],
             "clients": [ "canard", "kitchen" ]
         },
         {
@@ -61,7 +61,7 @@
                 "port": "5102"
             },
             "spotify_event": "librespot-event.sh",
-            "streams": [{"stream": "spotify"}, {"stream": "airplay"}, {"stream": "iris"}],
+            "streams": ["spotify", "airplay", "iris"],
             "clients": [ "ballroom", "outside" ]
         }
     ]
