@@ -55,7 +55,9 @@ playpause, play, stop, playresume, shuffle_songs, volumedown, volumeup
 
 ## State
 ```
-ha/study/media/status/playbackstate {"kodi_state": "stopped", "kodi_playertype": "video", "val": 0, "kodi_playerid": 1}
+media/study/kodi/status/notification/Player.OnPlay {"val": "{\"item\":{\"id\":14996,\"type\":\"episode\"},\"player\":{\"playerid\":1,\"speed\":1}}"}
+media/study/kodi/status/notification/Player.OnStop {"val": "{\"end\":true,\"item\":{\"id\":14996,\"type\":\"episode\"}}"}
+
 ```
 
 ## Control
