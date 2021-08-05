@@ -37,13 +37,13 @@ timeout = 60
 enabled = true
 hostname = ::
 port = {{mopidy.http_port}}
-zeroconf = {{name}} Mopidy
+zeroconf = {{Name}} Mopidy
 
 [mpd]
 enabled = true
 hostname = ::
 port = {{mopidy.mpd_port}}
-zeroconf = {{name}} Mopidy
+zeroconf = {{Name}} Mopidy
 
 [dleyna]
 enabled = false
