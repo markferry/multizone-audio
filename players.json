@@ -24,6 +24,15 @@
             "streams": ["spotify", "airplay", "iris"]
         },
         {
+            "name": "lounge",
+            "Name": "Lounge",
+            "airplay": {
+                "port": "5108"
+            },
+            "spotify_event": "librespot-event.sh",
+            "streams": ["spotify", "airplay", "iris"]
+        },
+        {
             "name": "outside",
             "Name": "Outside",
             "airplay": {
