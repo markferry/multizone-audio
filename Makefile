@@ -8,6 +8,7 @@ SYSTEMCTL_USER := --user
 EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
 
 ALL_HOSTS := \
+	study \
 	kitchen \
 	library \
 	outside \

@@ -6,6 +6,15 @@
 
     "hosts": [
         {
+            "name": "study",
+            "Name": "Study",
+            "airplay": {
+                "port": "5106"
+            },
+            "spotify_event": "librespot-event.sh",
+            "streams": ["spotify", "airplay", "iris"]
+        },
+        {
             "name": "library",
             "Name": "Library",
             "airplay": {
