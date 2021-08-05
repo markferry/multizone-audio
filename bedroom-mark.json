@@ -25,7 +25,7 @@
     "snapcast": {
         "host": "media.home.whalebarn.com",
         "_host": "127.0.0.1",
-        "opts": ""
+        "opts": "-s Device --mixer=hardware:Speaker"
     },
 
     "end": true
