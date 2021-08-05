@@ -1,5 +1,6 @@
 {
     "name": "library",
+    "Name": "Library",
 
     "path": {
         "media-root": "/mnt/md6-media",

@@ -1,5 +1,6 @@
 {
     "name": "kitchen",
+    "Name": "Kitchen",
 
     "path": {
         "media-root": "/mnt/md6-media",

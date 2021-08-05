@@ -1,5 +1,6 @@
 {
     "name": "outside",
+    "Name": "Outside",
 
     "path": {
         "media-root": "/mnt/md6-media",

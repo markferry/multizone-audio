@@ -1,5 +1,6 @@
 {
     "name": "ballroom",
+    "Name": "Ballroom",
 
     "path": {
         "media-root": "/mnt/md6-media",
