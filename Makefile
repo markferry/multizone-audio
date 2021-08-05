@@ -12,6 +12,7 @@ ALL_HOSTS := \
 	kitchen \
 	library \
 	lounge \
+	ballroom \
 	outside \
 	bedroom-mark \
 
