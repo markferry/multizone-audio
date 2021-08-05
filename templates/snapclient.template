@@ -24,5 +24,4 @@ START_SNAPCLIENT=true
 
 USER_OPTS="--user snapclient:audio"
 
-# HDMI - instance ID is added by the systemd unit
 SNAPCLIENT_OPTS="-h {{snapcast.host}} --hostID={{name}} {{snapcast.opts}}"
