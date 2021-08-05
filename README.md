@@ -1,13 +1,13 @@
 # Objectives
 
- * seamless SpotifyConnect, airplay, mopidy/mpd/upnp and kodi playback in each zone
+ * seamless SpotifyConnect, Airplay, Mopidy/MPD/UPNP and Kodi playback in each zone
  * invisible, automatic party reconfiguration
  * no clashing audio streams
  * no snapcast controls visible to end-users(!)
 
 # Architecture
 
-In particular I've decided to centralize most things leaving very little running on each media player.
+Almost all media services run on a central media server.
 
 Each media player is its own zone and there are also multiple (logical) "party zones" which group the real zones together.
 For more on logical zones see the [snapcast-autoconfig README](https://github.com/ahayworth/snapcast-autoconfig)
@@ -29,6 +29,27 @@ Snapserver is configured with:
 The snapserver itself runs and manages the `librespot` and `shairport-sync` media services.
 
 snapcast-autoconfig manages the snapcast groups (including, for the benefit of Iris, naming them!).
+
+### Hardware
+* USB audio device
+
+### Software
+
+* Debian 10+ "Buster"
+* snapserver v0.25+
+* Librespot
+* shairport-sync
+    * 3.3.8-OpenSSL-Avahi-ALSA-stdout-pipe-soxr-metadata-mqtt-sysconfdir:/etc
+    * build with mqtt  `./configure --sysconfdir=/etc --with-alsa --with-soxr --with-stdout --with-mqtt-client --with-metadata --with-avahi --with-ssl=openssl --with-pipe --with-systemd`
+* Mopidy
+    * Mopidy         3.2.0
+    * Mopidy-Iris    3.58.0
+    * Mopidy-Local   3.1.1
+    * Mopidy-MPD     3.1.0
+    * Mopidy-MQTT-NG 1.0.0
+    * Mopidy-Spotify 4.1.1
+    * Mopidy-TuneIn  1.1.0
+* mosquitto MQTT broker
 
 ## Media Players
 
@@ -59,6 +80,25 @@ The idea for this came from
 which implements control of concurrent playback streams via
 [MPRIS](https://www.freedesktop.org/wiki/Specifications/mpris-spec/).
 
+
+### Hardware
+* RPi1 / RPi2 / RPi3
+* USB audio device
+
+### Software
+
+* snapclient v0.25+
+* nginx
+* Moode, Volumio
+* OSMC / Kodi v19
+  * v19 required for current kodi2mqtt v21
+* kodi2mqtt
+
+
+### ALSA configuration
+
+USB device: card 5
+
 ## Stream Control
 
 The actual pausing of media streams will be done by an MQTT service - which could
@@ -80,6 +120,17 @@ Hardware volume levels are preset by snapcast-autoconfig.
 
 Each snapclient is configured to [use the same alsa hardware mixer](https://github.com/badaix/snapcast/commit/3ed76e20596b18baa14c04b3ec09c8f232f8e023) (if available).
 
+
+## Implementation
+
+
+### Audio Players
+
+
+### Video Players
+
+
+
 ## Issues
 
 1. snapcast-autoconfigure: [When clients are in an Idle group and one client's preferred stream starts, all clients play it](https://github.com/ahayworth/snapcast-autoconfig/issues/4)
@@ -87,7 +138,8 @@ Each snapclient is configured to [use the same alsa hardware mixer](https://gith
 3. there is no good UI for both multizone stream state *and* playlist management
 
 
-# People to follow
+# Resources
+## People to follow
 * [@badaix](https://github.com/badaix) - snapcast maintainer
 * [@kingosticks](https://github.com/kingosticks) - pimusicbox developer
 * [@frafall](https://github.com/frafall/) - snapcast metadata contributor and kodi snapcast service developer
