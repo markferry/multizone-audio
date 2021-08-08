@@ -4,6 +4,11 @@
     "_python_venv": "/home/gnome/.venvs/mopidy/bin/python",
     "python_venv": "",
 
+    "chromecast": {
+        "_device": "pulse",
+        "device": "default:CARD=Device"
+    },
+
     "hosts": [
         {
             "name": "study",
