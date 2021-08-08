@@ -4,6 +4,7 @@
  * invisible, automatic party reconfiguration
  * no clashing audio streams
  * no snapcast controls visible to end-users(!)
+ * eliminate unnecessary software volume controls
 
 # Architecture
 
@@ -114,21 +115,15 @@ streams being the one that has priority.
 
 ## Volume Control
 
-For end-users only (per-service) soft-volume control is available.
+For end-users, only (per-service) soft-volume control is available.
 
 Hardware volume levels are preset by snapcast-autoconfig.
 
-Each snapclient is configured to [use the same alsa hardware mixer](https://github.com/badaix/snapcast/commit/3ed76e20596b18baa14c04b3ec09c8f232f8e023) (if available).
+Each snapclient is configured to [use an alsa hardware mixer](https://github.com/badaix/snapcast/commit/3ed76e20596b18baa14c04b3ec09c8f232f8e023) (if available).
 
-
-## Implementation
-
-
-### Audio Players
-
-
-### Video Players
-
+### librespot and shairport-sync controlling a snapserver
+While `librespot` and `shairport-sync` can both be configured to control a
+hardware mixer the snapserver can't be, nor does it create a virtual mixer.
 
 
 ## Issues
