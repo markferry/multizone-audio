@@ -1,0 +1,12 @@
+[Unit]
+Description=Multizone Audio Controller
+After=network.target
+
+[Service]
+ExecStart={{python_venv}} {{config_root}}/controller/multizone-control.py
+#User=mopidy
+#Group=mopidy
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
