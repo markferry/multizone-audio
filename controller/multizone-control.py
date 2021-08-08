@@ -47,15 +47,14 @@ def on_mopidy_status(mosq, obj, msg):
 
 def on_spotify_status(mosq, obj, msg):
     print("spotify: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    if msg.payload == b'playing':
-        zone = parse_zone(msg.topic)
-        msgs = [
-            Message(f"{TOPIC_ROOT}/{zone}/mopidy/c/plb", "pause"),
-            Message(f"{TOPIC_ROOT}/{zone}/airplay/remote", "pause"),
-            Message(f"{TOPIC_ROOT}/{zone}/kodi/command/playbackstate", "pause"),
-        ]
-        for m in msgs:
-            mosq.publish(m.topic, m.payload)
+    zone = parse_zone(msg.topic)
+    msgs = [
+        Message(f"{TOPIC_ROOT}/{zone}/mopidy/c/plb", "pause"),
+        Message(f"{TOPIC_ROOT}/{zone}/airplay/remote", "pause"),
+        Message(f"{TOPIC_ROOT}/{zone}/kodi/command/playbackstate", "pause"),
+    ]
+    for m in msgs:
+        mosq.publish(m.topic, m.payload)
 
 def on_airplay_status(mosq, obj, msg):
     print("airplay: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
