@@ -1,8 +1,8 @@
 {
     "_config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
     "config_root": "/etc/multizone-audio",
-    "_python_venv": "/home/gnome/.venvs/mopidy/bin/python",
-    "python_venv": "",
+    "_python": "/home/gnome/.venvs/mopidy/bin/python",
+    "python": "python3",
 
     "chromecast": {
         "_device": "pulse",
