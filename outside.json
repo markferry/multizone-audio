@@ -25,8 +25,8 @@
     },
     "snapcast": {
         "host": "media.home.whalebarn.com",
-        "_host": "localhost",
-        "opts": "-s CARD=ALSA",
+        "_host": "127.0.0.1",
+        "opts": "-s b1 --mixer=hardware:HDMI",
         "_opts": ""
     },
 
