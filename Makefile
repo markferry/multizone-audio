@@ -54,6 +54,9 @@ all: $(ALL_CONFIGS)
 
 nginx: $(ALL_NGINX)
 
+dietpi/%.service: templates/dietpi/%.service.template players.json $(CHEVRON)
+	$(CHEVRON) -d players.json $<  > $@
+
 dev/%.service: templates/dev/%.service.template players.json $(CHEVRON)
 	$(CHEVRON) -d players.json $<  > $@
 
