@@ -71,7 +71,7 @@ See:
 
  * [mopidy-mqtt-ng](https://github.com/odiroot/mopidy-mqtt)
  * [shairport-sync MQTT support](https://github.com/mikebrady/shairport-sync/blob/master/MQTT.md)
- * `librespot --onevent mosquitto_pub.sh ...`
+ * `librespot --onevent librespot-event.sh...`
  * [kodi2mqtt](https://github.com/void-spark/kodi2mqtt)
 
 Each media service (except librespot) can also be *controlled* via MQTT.
