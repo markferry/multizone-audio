@@ -46,8 +46,10 @@ media/canard/spotify paused
 media/kitchen/airplay/remote pause
 ```
 
-commands: ```
-  command, beginff, beginrew, mutetoggle, nextitem, previtem, pause,
+commands:
+
+```
+command, beginff, beginrew, mutetoggle, nextitem, previtem, pause,
 playpause, play, stop, playresume, shuffle_songs, volumedown, volumeup
 ```
 
@@ -61,5 +63,7 @@ media/study/kodi/status/notification/Player.OnStop {"val": "{\"end\":true,\"item
 ```
 
 ## Control
+```
 media/command/playbackstate "pause"
+```
 
