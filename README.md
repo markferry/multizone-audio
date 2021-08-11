@@ -17,7 +17,7 @@ For more on logical zones see the [snapcast-autoconfig README](https://github.co
 
 The media server runs:
 
- * one mopidy instance per zone (providing mpd + upnp + iris)
+ * one mopidy instance per zone (providing mpd + iris)
  * snapserver
  * [snapcast-autoconfig](https://github.com/ahayworth/snapcast-autoconfig)
  * [mosquitto mqtt broker](https://mosquitto.org/)
@@ -32,16 +32,16 @@ The snapserver itself runs and manages the `librespot` and `shairport-sync` medi
 snapcast-autoconfig manages the snapcast groups (including, for the benefit of Iris, naming them!).
 
 ### Hardware
-* USB audio device
+* USB audio capture device with S/PDIF input - [Startech ICUSBAUDIO7D ~£28 at Amazon UK](https://www.amazon.co.uk/dp/B002LM0U2S)
 
 ### Software
 
 * Debian 10+ "Buster"
 * snapserver v0.25+
-* Librespot
+* [librespot](https://github.com/librespot-org/librespot)  (*TODO:* replace with [librespot-java](https://github.com/librespot-org/librespot-java))
 * shairport-sync
     * 3.3.8-OpenSSL-Avahi-ALSA-stdout-pipe-soxr-metadata-mqtt-sysconfdir:/etc
-    * build with mqtt  `./configure --sysconfdir=/etc --with-alsa --with-soxr --with-stdout --with-mqtt-client --with-metadata --with-avahi --with-ssl=openssl --with-pipe --with-systemd`
+    * built with mqtt:  `./configure --sysconfdir=/etc --with-alsa --with-soxr --with-stdout --with-mqtt-client --with-metadata --with-avahi --with-ssl=openssl --with-pipe --with-systemd`
 * Mopidy
     * Mopidy         3.2.0
     * Mopidy-Iris    3.58.0
@@ -57,12 +57,12 @@ snapcast-autoconfig manages the snapcast groups (including, for the benefit of I
 Each media player runs:
 
  * snapclient
- * nginx, proxying `http://<hostname>/` to `http://<media-server>:668x/iris`
- * kodi, if-and-only-if they have a screen or projector attached (I think I'll disable Kodi's web interface too...)
+ * nginx, proxying `http://<hostname>/` to `http://<media-server>:66xx/iris`
+ * kodi, if-and-only-if the player has a screen or projector attached
 
 While snapcast meta streams are neat for auto-switching between audio services it's
 still confusing when, say, both a spotify and airplay stream attempt to play to
-the same zone. Instead when one service starts playing we want the others (in the same zone) to pause.
+the same zone. Instead, when one service starts playing we want the others (in the same zone) to pause.
 
 To accomplish this each media service (mopidy, librespot, ...) is configured to
 notify via MQTT when playback starts.
@@ -84,34 +84,28 @@ which implements control of concurrent playback streams via
 
 ### Hardware
 * RPi1 / RPi2 / RPi3
-* USB audio device
+* Generic USB stereo sound card - [UGREEN USB external sound card](https://www.ugreen.com/products/usb-external-stereo-sound-card)
 
 ### Software
 
 * snapclient v0.25+
 * nginx
-* Moode, Volumio
+* dietpi
 * OSMC / Kodi v19
-  * v19 required for current kodi2mqtt v21
-* kodi2mqtt
+* [kodi2mqtt](https://github.com/void-spark/kodi2mqtt)
+  * Kodi v19 required for current kodi2mqtt v21 (or use the [python2.7 patch by tspspi](https://github.com/tspspi/kodi2mqtt/commit/e7df9fa70284f0e905728c33c4b243bec92073e8))
 
 
-### ALSA configuration
+## Controller
 
-USB device: card 5
+The pausing of media streams is done by a simple MQTT service - though it could
+be implemented as:
 
-## Stream Control
+ * an extension to [hifiberry's audiocontrol2](https://github.com/hifiberry/audiocontrol2),
+ * a [HomeAssistant automation](https://www.home-assistant.io/integrations/mqtt/).
 
-The actual pausing of media streams will be done by an MQTT service - which could
-either be implemented as an extension to
-[hifiberry's audiocontrol2](https://github.com/hifiberry/audiocontrol2),
-a [standalone service](https://www.emqx.com/en/blog/how-to-use-mqtt-in-python)
-or [HA automations](https://www.home-assistant.io/integrations/mqtt/).
-
-And if I can get local control of SpotifyConnect players, (perhaps using
-[librespot-java](https://github.com/librespot-org/librespot-java)) then I can
-even do away the snapcast meta streams altogether and just have the last played
-streams being the one that has priority.
+Using `librespot-java` instead of `librespot` the controller could control
+specific SpotifyConnect players, making snapcast meta streams unnecessary.
 
 ## Volume Control
 
