@@ -1,21 +1,22 @@
 {
+  "dev": true,
   "path": {
-    "config_root": "/etc/multizone-audio",
-    "media_root": "/mnt/md6-media",
-    "music_metadata": "music/metadata"
+    "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
+    "media_root": "/home/gnome",
+    "music_metadata": ".cache"
   },
   "mqtt": {
-    "host": "pixie3"
+    "host": "localhost"
   },
-  "python": "python3",
+  "python": "/home/gnome/network/multizone-audio/etc/multizone-audio/.venv/bin/python",
   "chromecast": {
-    "device": "default:CARD=Device"
+    "device": "pulse"
   },
   "mopidy": {
-    "host": "media"
+    "host": "localhost"
   },
   "snapcast": {
-    "host": "media"
+    "host": "127.0.0.1"
   },
   "spotify": {
     "event": "librespot-event.sh"

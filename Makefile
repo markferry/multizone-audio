@@ -7,7 +7,7 @@ LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
 LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 
 VENV := .venv
-SYSTEMCTL_USER ?=
+SYSTEMCTL_USER := --user
 
 ALL_HOSTS := \
 	study \
