@@ -3,12 +3,12 @@
     "Name": "Library",
 
     "path": {
-        "media-root": "/home/gnome",
-        "music-metadata": ".cache"
+        "media-root": "/mnt/md6-media",
+        "music-metadata": "music/metadata"
     },
 
     "mopidy": {
-        "host": "localhost",
+        "host": "media.home.whalebarn.com",
         "http_port": "6687",
         "mpd_port": "6607"
     },
@@ -16,11 +16,11 @@
         "port": "5107"
     },
     "mqtt": {
-        "host": "localhost"
+        "host": "pixie3"
     },
     "snapcast": {
-        "host": "127.0.0.1",
-        "opts": ""
+        "host": "media.home.whalebarn.com",
+        "opts": "-s Device --mixer=hardware:Speaker"
     },
 
     "end": true

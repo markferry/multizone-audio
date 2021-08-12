@@ -1,9 +1,9 @@
 {
-    "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
-    "python": "/home/gnome/.venvs/mopidy/bin/python",
+    "config_root": "/etc/multizone-audio",
+    "python": "python3",
 
     "chromecast": {
-        "device": "pulse"
+        "device": "default:CARD=Device"
     },
 
     "hosts": [
