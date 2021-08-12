@@ -1,6 +1,6 @@
 ---
-loglevel: debug
-server: tcp://localhost:1705
+loglevel: info
+server: tcp://media:1705
 streams:
   {{#hosts}}
   {{Name}}:

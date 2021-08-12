@@ -3,17 +3,12 @@
     "Name": "Outside",
 
     "path": {
-        "media-root": "/mnt/md6-media",
-        "music-metadata": "music/metadata"
-    },
-    "_path": {
         "media-root": "/home/gnome",
         "music-metadata": ".cache"
     },
 
     "mopidy": {
-        "host": "media.home.whalebarn.com",
-        "_host": "localhost",
+        "host": "localhost",
         "http_port": "6690",
         "mpd_port": "6610"
     },
@@ -24,10 +19,8 @@
         "host": "localhost"
     },
     "snapcast": {
-        "host": "media.home.whalebarn.com",
-        "_host": "127.0.0.1",
-        "opts": "-s b1 --mixer=hardware:HDMI",
-        "_opts": ""
+        "host": "127.0.0.1",
+        "opts": ""
     },
 
     "end": true
