@@ -1,28 +1,28 @@
 {
+  "dev": true,
   "path": {
-    "config_root": "/etc/multizone-audio",
-    "media_root": "/mnt/media",
-    "music_metadata": "music/metadata",
+    "config_root": "/home/gnome/network/multizone-audio/etc/multizone-audio",
+    "media_root": "/home/gnome",
+    "music_metadata": ".cache",
     "java": "/usr/bin/java"
   },
   "mqtt": {
-    "host": "pixie3"
+    "host": "localhost"
   },
-  "python": "python3",
+  "python": "/home/gnome/network/multizone-audio/etc/multizone-audio/.venv/bin/python",
   "chromecast": {
-    "device": "default:CARD=ICUSBAUDIO7D"
+    "device": "pulse"
   },
   "mopidy": {
-    "host": "media",
-    "path": "/var/lib/mopidy/bin/mopidy"
+    "host": "localhost"
   },
   "snapcast": {
-    "host": "media",
-    "snapweb_root": "/var/www/snapweb"
+    "host": "127.0.0.1",
+    "snapweb_root": "/usr/share/snapserver/snapweb"
   },
   "spotify": {
     "event": "librespot-event.sh",
-    "jar": "/opt/librespot/librespot-api.jar"
+    "jar": "/home/gnome/network/multizone-audio/librespot-java/librespot-api.jar"
   },
   "hosts": [
     {
@@ -233,7 +233,7 @@
         "latency": 0,
         "opts": ""
       },
-      "dev": false
+      "dev": true
     }
   ],
   "party-zones": [

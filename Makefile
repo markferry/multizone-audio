@@ -8,7 +8,7 @@ LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
 
 VENV := .venv
-SYSTEMCTL_USER ?=
+SYSTEMCTL_USER := --user
 
 ALL_HOSTS := \
 	study \
