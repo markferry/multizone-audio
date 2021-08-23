@@ -12,3 +12,11 @@ media_player:
     host: {{name}}.home.whalebarn.com
     port: 8080
 {{/kodi}}
+
+group:
+  {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_multizone_audio_players:
+    entities:
+      - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mpd
+      {{#kodi}}
+      - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_kodi
+      {{/kodi}}
