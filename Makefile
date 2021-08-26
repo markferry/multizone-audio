@@ -1,3 +1,4 @@
+HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
 
@@ -31,6 +32,8 @@ ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_HOSTS))
 ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
 ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
 ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
+ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_HOSTS))
+ALL_HOME_ASSISTANT_INSTALL := $(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml, $(ALL_HOSTS))
 
 ALL_CONFIGS := \
 	../snapserver.conf \
@@ -38,6 +41,7 @@ ALL_CONFIGS := \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
+	$(ALL_HOME_ASSISTANT) \
 	$(ALL_SNAPCLIENTS) \
 
 DEV_CONFIGS := \
@@ -53,6 +57,13 @@ ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
 all: $(ALL_CONFIGS)
 
 nginx: $(ALL_NGINX)
+
+home-assistant: $(ALL_HOME_ASSISTANT)
+
+$(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml: home-assistant.%.yaml
+	install -T $^ $@
+
+ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
 dietpi/%.service: templates/dietpi/%.service.template players.json $(CHEVRON)
 	$(CHEVRON) -d players.json $<  > $@
@@ -86,6 +97,9 @@ shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
 
 iris.%.conf: %.json templates/iris.template $(CHEVRON)
 	$(CHEVRON) -d $< templates/iris.template > $@
+
+home-assistant.%.yaml: %.json templates/home-assistant.yaml.template $(CHEVRON)
+	$(CHEVRON) -d $< templates/home-assistant.yaml.template > $@
 
 
 snapserver: ../snapserver.conf
