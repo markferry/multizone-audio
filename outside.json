@@ -23,5 +23,5 @@
         "opts": "-s b1 --mixer=hardware:HDMI"
     },
 
-    "end": true
+    "dev": false
 }

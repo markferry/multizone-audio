@@ -23,5 +23,5 @@
         "opts": "--mixer=hardware"
     },
 
-    "end": true
+    "dev": false
 }

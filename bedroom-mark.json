@@ -23,5 +23,5 @@
         "opts": "-s Device --mixer=hardware:Speaker"
     },
 
-    "end": true
+    "dev": false
 }
