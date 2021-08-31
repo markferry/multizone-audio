@@ -75,24 +75,14 @@
 
     "party-zones": [
         {
-            "name": "party1",
-            "Name": "Party 1",
+            "name": "everywhere",
+            "Name": "Everywhere",
             "airplay": {
                 "port": "5101"
             },
             "spotify_event": "librespot-event.sh",
             "streams": ["spotify", "airplay", "iris"],
-            "clients": [ "canard", "kitchen" ]
-        },
-        {
-            "name": "party2",
-            "Name": "Party 2",
-            "airplay": {
-                "port": "5102"
-            },
-            "spotify_event": "librespot-event.sh",
-            "streams": ["spotify", "airplay", "iris"],
-            "clients": [ "ballroom", "outside" ]
+            "clients": [ "study", "kitchen", "lounge", "library", "ballroom", "outside", "bedroom-mark" ]
         }
     ]
 }
