@@ -136,7 +136,7 @@ stream = alsa://?name=Barn Chromecast{{#chromecast.device}}&device={{.}}{{/chrom
 # {{name}}
 stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
 stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify_event}}%20{{name}}
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
 
 stream = meta:///{{#streams}}- {{name}} {{.}}/{{/streams}}{{#other_streams}}{{.}}/{{/other_streams}}?name={{Name}}
 
@@ -146,7 +146,7 @@ stream = meta:///{{#streams}}- {{name}} {{.}}/{{/streams}}{{#other_streams}}{{.}
 # {{Name}}
 stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
 stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify_event}}%20{{name}}
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
 
 stream = meta:///{{#streams}}- {{name}} {{.}}/{{/streams}}?name={{Name}}
 

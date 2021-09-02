@@ -13,7 +13,10 @@
             "airplay": {
                 "port": "5106"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39806"
+            },
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -22,7 +25,10 @@
             "airplay": {
                 "port": "5107"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39807"
+            },
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -31,7 +37,10 @@
             "airplay": {
                 "port": "5108"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39808"
+            },
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -40,7 +49,10 @@
             "airplay": {
                 "port": "5109"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39809"
+            },
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -49,7 +61,10 @@
             "airplay": {
                 "port": "5110"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39810"
+            },
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -58,7 +73,10 @@
             "airplay": {
                 "port": "5111"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39811"
+            },
             "streams": ["spotify", "airplay", "iris"],
             "other_streams": ["Barn Chromecast"]
         },
@@ -68,7 +86,10 @@
             "airplay": {
                 "port": "5112"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39812"
+            },
             "streams": ["spotify", "airplay", "iris"]
         }
     ],
@@ -80,7 +101,10 @@
             "airplay": {
                 "port": "5101"
             },
-            "spotify_event": "librespot-event.sh",
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "39801"
+            },
             "streams": ["spotify", "airplay", "iris"],
             "clients": [ "study", "kitchen", "lounge", "library", "ballroom", "outside", "bedroom-mark" ]
         }
