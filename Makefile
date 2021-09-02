@@ -17,6 +17,10 @@ ALL_HOSTS := \
 	outside \
 	bedroom-mark \
 
+ALL_ZONES := \
+	$(ALL_HOSTS) \
+	everywhere \
+
 EXP_SERVICES := {snapclient,mopidy}
 
 DEV_UNITS := \
@@ -28,7 +32,7 @@ DEBIAN_UNITS := \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/mopidy@.service \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
 
-ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_HOSTS))
+ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
 ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
 ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
 ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))

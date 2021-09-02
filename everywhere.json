@@ -1,0 +1,23 @@
+{
+    "name": "everywhere",
+    "Name": "Everywhere",
+
+    "path": {
+        "media-root": "/mnt/md6-media",
+        "music-metadata": "music/metadata"
+    },
+
+    "mopidy": {
+        "host": "media.home.whalebarn.com",
+        "http_port": "6681",
+        "mpd_port": "6601"
+    },
+    "airplay": {
+        "port": "5101"
+    },
+    "mqtt": {
+        "host": "pixie3"
+    },
+
+    "dev": false
+}
