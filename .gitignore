@@ -1,3 +1,4 @@
 systemd/*.service
 snapcast-autoconfig.yaml
 *.conf
+home-assistant.*.yaml
