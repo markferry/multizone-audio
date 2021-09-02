@@ -60,3 +60,5 @@ locale = en_GB
 host = {{mqtt.host}}
 port = 1883
 topic = media/{{name}}/mopidy
+
+# vi: filetype=dosini
