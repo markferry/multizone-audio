@@ -8,7 +8,7 @@
     },
 
     "mopidy": {
-        "host": "media.home.whalebarn.com",
+        "host": "media",
         "http_port": "6689",
         "mpd_port": "6609"
     },
@@ -22,7 +22,7 @@
       "port": 8080
     },
     "snapcast": {
-        "host": "media.home.whalebarn.com",
+        "host": "media",
         "opts": "--mixer=hardware"
     },
 

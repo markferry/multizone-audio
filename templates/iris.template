@@ -2,7 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name  {{name}} {{name}}.home.whalebarn.com;
+    server_name  {{name}} {{name}}.*;
 
     proxy_http_version 1.1;
     proxy_read_timeout 600s;

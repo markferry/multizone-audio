@@ -8,7 +8,7 @@
     },
 
     "mopidy": {
-        "host": "media.home.whalebarn.com",
+        "host": "media",
         "http_port": "6691",
         "mpd_port": "6611"
     },
@@ -19,7 +19,7 @@
         "host": "pixie3"
     },
     "snapcast": {
-        "host": "media.home.whalebarn.com",
+        "host": "media",
         "opts": "-s Device --mixer=hardware:Speaker"
     },
 
