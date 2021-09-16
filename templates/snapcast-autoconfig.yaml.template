@@ -7,7 +7,7 @@ streams:
     clients:
       - {{name}}
     volume:
-      {{name}}: 100
+      {{name}}: {{snapcast.volume}}
   {{/hosts}}
 
   {{#party-zones}}

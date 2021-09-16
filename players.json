@@ -13,6 +13,9 @@
             "airplay": {
                 "port": "5106"
             },
+            "snapcast": {
+                "volume": 100
+            },
             "spotify": {
               "event": "librespot-event.sh",
               "zeroconf": "39806"
@@ -24,6 +27,9 @@
             "Name": "Library",
             "airplay": {
                 "port": "5107"
+            },
+            "snapcast": {
+                "volume": 45
             },
             "spotify": {
               "event": "librespot-event.sh",
@@ -37,6 +43,9 @@
             "airplay": {
                 "port": "5108"
             },
+            "snapcast": {
+                "volume": 100
+            },
             "spotify": {
               "event": "librespot-event.sh",
               "zeroconf": "39808"
@@ -48,6 +57,9 @@
             "Name": "Ballroom",
             "airplay": {
                 "port": "5109"
+            },
+            "snapcast": {
+                "volume": 100
             },
             "spotify": {
               "event": "librespot-event.sh",
@@ -61,6 +73,9 @@
             "airplay": {
                 "port": "5110"
             },
+            "snapcast": {
+                "volume": 100
+            },
             "spotify": {
               "event": "librespot-event.sh",
               "zeroconf": "39810"
@@ -72,6 +87,9 @@
             "Name": "Kitchen",
             "airplay": {
                 "port": "5111"
+            },
+            "snapcast": {
+                "volume": 65
             },
             "spotify": {
               "event": "librespot-event.sh",
@@ -85,6 +103,9 @@
             "Name": "Bedroom Mark",
             "airplay": {
                 "port": "5112"
+            },
+            "snapcast": {
+                "volume": 100
             },
             "spotify": {
               "event": "librespot-event.sh",
