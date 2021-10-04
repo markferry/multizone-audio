@@ -161,4 +161,11 @@ live-install: debian $(DEBIAN_UNITS)
 clean:
 	-rm $(ALL_CONFIGS)
 
+# Documentation
+%.html: %.md Makefile
+	pandoc -d multizone-audio -s -f gfm+attributes -t html5 -o $@ $<
+
+doc: doc/demo-001.html
+
+
 .PHONY: clean install status stop controller
