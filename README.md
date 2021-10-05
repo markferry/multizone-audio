@@ -1,10 +1,15 @@
+---
+title: README
+---
+
 # Objectives
 
- * seamless SpotifyConnect, Airplay, Mopidy/MPD/UPNP and Kodi playback in each zone
- * invisible, automatic party reconfiguration
- * no clashing audio streams
- * no snapcast controls visible to end-users(!)
- * eliminate unnecessary software volume controls
+- [ ] seamless SpotifyConnect, Airplay, Mopidy/MPD/UPNP and Kodi playback in each zone
+- [ ] invisible, automatic party reconfiguration
+- [x] no clashing audio streams
+- [ ] no snapcast controls visible to end-users(!)
+- [x] eliminate unnecessary software volume controls
+- [x] replaygain support
 
 # Architecture
 
