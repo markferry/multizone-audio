@@ -23,7 +23,7 @@ enabled = true
 playlists_dir = {{path.media-root}}/{{path.music-metadata}}/playlists
 
 [audio]
-output = audioresample ! audio/x-raw,rate=48000,channels=2,format=S16LE ! audioconvert ! wavenc ! filesink location=/tmp/mopidy.{{name}}
+output = audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/mopidy.{{name}}
 
 [spotify]
 enabled = false
