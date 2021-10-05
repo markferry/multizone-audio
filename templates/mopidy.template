@@ -24,6 +24,7 @@ playlists_dir = {{path.media-root}}/{{path.music-metadata}}/playlists
 
 [audio]
 output = audioresample ! audioconvert ! rgvolume ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/mopidy.{{name}}
+mixer_volume = 20
 
 [spotify]
 enabled = false
