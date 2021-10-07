@@ -139,3 +139,5 @@ hardware mixer the snapserver can't be, nor does it create a virtual mixer.
 * [@frafall](https://github.com/frafall/) - snapcast metadata contributor and kodi snapcast service developer
 * [@ahayworth](https://github.com/ahayworth) - snapcast-autoconfig maintainer
 
+## Projects
+* [skalavala multi-room audio]([https://github.com/skalavala/Multi-Room-Audio-Centralized-Audio-for-Home) - multi-zone but single-stream
