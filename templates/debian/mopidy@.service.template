@@ -14,7 +14,7 @@ User=mopidy
 PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /var/cache/mopidy
 ExecStartPre=/bin/chown mopidy:audio /var/cache/mopidy
-ExecStart=/usr/bin/mopidy --config /usr/share/mopidy/conf.d:{{config_root}}/mopidy.%i.conf
+ExecStart=/usr/local/bin/mopidy --config /usr/share/mopidy/conf.d:{{config_root}}/mopidy.%i.conf
 
 [Install]
 WantedBy=multi-user.target
