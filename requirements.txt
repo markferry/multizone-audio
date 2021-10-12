@@ -1,0 +1,9 @@
+# python requirements
+#   native requirements (e.g. libspotify) must be installed separately
+Mopidy>=3.1.0
+Mopidy-Iris
+Mopidy-Local
+Mopidy-MPD
+Mopidy-MQTT-NG
+Mopidy-Spotify
+Mopidy-TuneIn
