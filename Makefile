@@ -4,7 +4,7 @@ LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
 
 VENV := ~/.venvs/chevron
 CHEVRON := $(VENV)/bin/chevron
-SYSTEMCTL_USER := --user
+SYSTEMCTL_USER := 
 
 EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
 
@@ -153,7 +153,7 @@ dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
 dev-install: dev $(DEV_UNITS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
-debian: $(ALL_CONFIGS) $(DEBIAN_CONFIGS)
+debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
 live-install: debian $(DEBIAN_UNITS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
@@ -168,4 +168,4 @@ clean:
 doc: doc/demo-001.html
 
 
-.PHONY: clean install status stop controller
+.PHONY: clean install status stop controller debian
