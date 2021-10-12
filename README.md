@@ -48,13 +48,13 @@ snapcast-autoconfig manages the snapcast groups (including, for the benefit of I
     * 3.3.8-OpenSSL-Avahi-ALSA-stdout-pipe-soxr-metadata-mqtt-sysconfdir:/etc
     * built with mqtt:  `./configure --sysconfdir=/etc --with-alsa --with-soxr --with-stdout --with-mqtt-client --with-metadata --with-avahi --with-ssl=openssl --with-pipe --with-systemd`
 * Mopidy
-    * Mopidy         3.2.0
-    * Mopidy-Iris    3.58.0
-    * Mopidy-Local   3.1.1
-    * Mopidy-MPD     3.1.0
-    * Mopidy-MQTT-NG 1.0.0
-    * Mopidy-Spotify 4.1.1
-    * Mopidy-TuneIn  1.1.0
+    * Mopidy             3.2.0
+    * Mopidy-Iris        3.59.1
+    * Mopidy-Local       3.2.1
+    * Mopidy-MPD         3.2.0
+    * Mopidy-MQTT-NG     1.0.0
+    * Mopidy-Spotify     4.1.1
+    * Mopidy-TuneIn      1.1.0
 * mosquitto MQTT broker
 
 ## Media Players

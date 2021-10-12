@@ -56,6 +56,8 @@ enabled = false
 [iris]
 country = GB
 locale = en_GB
+snapcast_enabled = true
+snapcast_host = {{snapcast.host}}
 
 [mqtt]
 host = {{mqtt.host}}
