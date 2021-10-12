@@ -18,6 +18,10 @@
     "mqtt": {
         "host": "pixie3"
     },
+    "snapcast": {
+        "host": "media",
+        "opts": ""
+    },
 
     "dev": false
 }
