@@ -140,4 +140,4 @@ hardware mixer the snapserver can't be, nor does it create a virtual mixer.
 * [@ahayworth](https://github.com/ahayworth) - snapcast-autoconfig maintainer
 
 ## Projects
-* [skalavala multi-room audio]([https://github.com/skalavala/Multi-Room-Audio-Centralized-Audio-for-Home) - multi-zone but single-stream
+* [skalavala multi-room audio](https://github.com/skalavala/Multi-Room-Audio-Centralized-Audio-for-Home) - multi-zone but single-stream
