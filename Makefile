@@ -2,9 +2,8 @@ HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
 
-VENV := ~/.venvs/chevron
-CHEVRON := $(VENV)/bin/chevron
-SYSTEMCTL_USER := 
+VENV := .venv
+SYSTEMCTL_USER := --user
 
 EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
 
@@ -59,6 +58,22 @@ LIVE_CONFIGS := \
 ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
 
 all: $(ALL_CONFIGS)
+
+# Find chevron or create a venv and install it
+SYS_CHEVRON := $(shell which chevron)
+ifeq (, $(SYS_CHEVRON))
+  CHEVRON := $(VENV)/bin/chevron
+$(CHEVRON): venv
+else
+  CHEVRON := $(SYS_CHEVRON)
+endif
+
+$(VENV):
+	$(info "No chevron in $(PATH). Installing in $(VENV)")
+	python3 -m venv $(VENV)
+	$(VENV)/bin/pip install chevron
+
+venv: $(VENV)
 
 nginx: $(ALL_NGINX)
 
