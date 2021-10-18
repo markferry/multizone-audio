@@ -176,13 +176,6 @@ sudo apt-get install libspotify-dev
 .venv/bin/pip install -r requirements.txt
 ```
 
-# Issues
-
-1. snapcast-autoconfigure: [When clients are in an Idle group and one client's preferred stream starts, all clients play it](https://github.com/ahayworth/snapcast-autoconfig/issues/4)
-2. it's possible to see *which* streams are playing, but not *what* they're playing. snapcast metadata is a [work-in-progress](https://github.com/badaix/snapcast/issues/803)
-3. there is no good UI for both multizone stream state *and* playlist management
-
-
 # Resources
 ## People to follow
 * [@badaix](https://github.com/badaix) - snapcast maintainer
@@ -192,3 +185,4 @@ sudo apt-get install libspotify-dev
 
 ## Projects
 * [skalavala multi-room audio](https://github.com/skalavala/Multi-Room-Audio-Centralized-Audio-for-Home) - multi-zone but single-stream
+* [spocon](https://github.com/spocon/spocon) - librespot-java packaged for Debian
