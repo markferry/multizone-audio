@@ -185,7 +185,7 @@ clean:
 
 # Documentation
 %.html: %.md Makefile
-	pandoc -d multizone-audio -s -f gfm+attributes -t html5 -o $@ $<
+	pandoc -d multizone-audio --self-contained -f gfm+attributes -t html5 -o $@ $<
 
 doc: doc/demo-001.html
 
