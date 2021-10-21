@@ -166,6 +166,9 @@
         "opts": "-s Device --mixer=hardware:Speaker",
         "volume": 80
       },
+      "soundcloud": {
+        "auth_token": "3-35204-1042735861-bgZZ8h4oZU7RVB"
+      },
       "spotify": {
         "zeroconf": "39812"
       },

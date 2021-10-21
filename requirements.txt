@@ -9,3 +9,4 @@ Mopidy-MPD
 Mopidy-MQTT-NG
 Mopidy-Spotify
 Mopidy-TuneIn
+Mopidy-Soundcloud

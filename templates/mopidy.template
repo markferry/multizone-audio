@@ -64,5 +64,9 @@ country = GB
 locale = en_GB
 snapcast_enabled = true
 snapcast_host = {{snapcast.host}}
+
+[soundcloud]
+auth_token = {{soundcloud.auth_token}}
+
 {{/zone.mopidy.mpd_only}}
 # vi: filetype=dosini
