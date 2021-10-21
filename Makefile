@@ -23,6 +23,7 @@ ALL_ZONES := \
 EXP_SERVICES := {snapclient,mopidy}
 
 DEV_UNITS := \
+	$(DEV_SYSTEMD_CONFIG_DIR)/snapserver.service \
 	$(DEV_SYSTEMD_CONFIG_DIR)/snapclient@.service \
 	$(DEV_SYSTEMD_CONFIG_DIR)/mopidy@.service \
 	$(DEV_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
@@ -48,12 +49,14 @@ ALL_CONFIGS := \
 	$(ALL_SNAPCLIENTS) \
 
 DEV_CONFIGS := \
+	dev/snapserver.service \
 	dev/snapclient@.service \
 	dev/mopidy@.service \
+	dev/multizone-audio-control.service \
 
 LIVE_CONFIGS := \
-	debian/snapclient@.service \
 	debian/mopidy@.service \
+	debian/multizone-audio-control.service \
 
 ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
 
@@ -88,15 +91,19 @@ dietpi/%.service: templates/dietpi/%.service.template players.json $(CHEVRON)
 	$(CHEVRON) -d players.json $<  > $@
 
 dev/%.service: templates/dev/%.service.template players.json $(CHEVRON)
+	-@mkdir -p dev
 	$(CHEVRON) -d players.json $<  > $@
 
 dev/%.service: templates/%.service.template players.json $(CHEVRON)
+	-@mkdir -p dev
 	$(CHEVRON) -d players.json $<  > $@
 
 debian/%.service: templates/debian/%.service.template players.json $(CHEVRON)
+	-@mkdir -p debian
 	$(CHEVRON) -d players.json $<  > $@
 
 debian/%.service: templates/%.service.template players.json $(CHEVRON)
+	-@mkdir -p debian
 	$(CHEVRON) -d players.json $<  > $@
 
 ../snapserver.conf: templates/snapserver.template players.json $(CHEVRON)
@@ -183,4 +190,4 @@ clean:
 doc: doc/demo-001.html
 
 
-.PHONY: clean install status stop controller debian
+.PHONY: clean install status stop controller debian dev
