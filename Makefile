@@ -3,7 +3,7 @@ DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
 
 VENV := .venv
-SYSTEMCTL_USER := --user
+SYSTEMCTL_USER := 
 
 EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
 
