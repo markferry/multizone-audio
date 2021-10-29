@@ -1,3 +1,9 @@
+upstream mopidy-host {
+    # workaround upstream DNS resolution failure
+    server {{mopidy.host}}:{{mopidy.http_port}};
+    keepalive 5;
+}
+
 server {
     listen 80;
     listen [::]:80;
@@ -11,7 +17,7 @@ server {
     }
 
     location / {
-        proxy_pass http://{{mopidy.host}}:{{mopidy.http_port}};
+        proxy_pass http://mopidy-host;
         proxy_set_header Host $host;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
