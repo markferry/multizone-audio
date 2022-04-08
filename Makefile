@@ -1,3 +1,4 @@
+SHELL := /bin/bash   # for curly-brace expansion
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
