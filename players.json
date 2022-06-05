@@ -1,5 +1,6 @@
 {
     "config_root": "/etc/multizone-audio",
+    "media_root": "/mnt/md6-media",
     "python": "python3",
 
     "chromecast": {
