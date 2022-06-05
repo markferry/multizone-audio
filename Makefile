@@ -1,7 +1,7 @@
 SHELL := /bin/bash   # for curly-brace expansion
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
-DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user/
-LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system/
+DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
+LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
 
 VENV := .venv
 SYSTEMCTL_USER := 
@@ -180,6 +180,16 @@ debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
 live-install: debian $(DEBIAN_UNITS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
+
+# Player install
+#
+debian-%-install: debian iris.%.conf debian/nginx.override.conf
+	install -t $(LIVE_SYSTEMD_CONFIG_DIR) iris.$*.conf
+	install -T -D debian/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
+
+dietpi-%-install: dietpi iris.%.conf dietpi/nginx.override.conf
+	install -t $(LIVE_SYSTEMD_CONFIG_DIR) iris.$*.conf
+	install -T -D dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 clean:
 	-rm $(ALL_CONFIGS)
