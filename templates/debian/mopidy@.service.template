@@ -8,6 +8,7 @@ After=nss-lookup.target
 After=pulseaudio.service
 After=remote-fs.target
 After=sound.target
+RequiresMountsFor={{media_root}}
 
 [Service]
 User=mopidy
