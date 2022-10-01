@@ -4,9 +4,10 @@ title: README
 
 A **config generator** for a multizone audio system based on snapcast, Mopidy and MQTT.
 
-# Objectives
+# Features
 
 - [ ] seamless SpotifyConnect, Airplay, Mopidy/MPD/UPNP and Kodi playback in each zone
+- [x] high-priority announcement streams (alarms, doorbells)
 - [ ] invisible, automatic party reconfiguration
 - [x] no clashing audio streams
 - [ ] no snapcast controls visible to end-users(!)
