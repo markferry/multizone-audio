@@ -7,6 +7,10 @@
         "device": "default:CARD=Device"
     },
 
+    "announcers": [
+        "announcer"
+    ],
+
     "hosts": [
         {
             "name": "study",

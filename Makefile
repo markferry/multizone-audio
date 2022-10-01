@@ -19,6 +19,7 @@ ALL_HOSTS := \
 
 ALL_ZONES := \
 	$(ALL_HOSTS) \
+	announcer \
 	everywhere \
 
 EXP_SERVICES := {snapclient,mopidy}
