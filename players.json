@@ -7,6 +7,10 @@
         "device": "default:CARD=Device"
     },
 
+    "announcers": [
+        "announcer"
+    ],
+
     "hosts": [
         {
             "name": "study",
@@ -21,6 +25,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39806"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -36,6 +41,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39807"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -51,6 +57,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39808"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -66,6 +73,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39809"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -81,6 +89,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39810"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         },
         {
@@ -96,6 +105,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39811"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"],
             "other_streams": ["Barn Chromecast"]
         },
@@ -112,6 +122,7 @@
               "event": "librespot-event.sh",
               "zeroconf": "39812"
             },
+            "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
         }
     ],

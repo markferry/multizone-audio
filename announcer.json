@@ -1,0 +1,25 @@
+{
+    "name": "announcer",
+    "Name": "Announcer",
+
+    "path": {
+        "media-root": "/mnt/md6-media",
+        "music-metadata": "music/metadata"
+    },
+
+    "mopidy": {
+        "host": "media",
+        "http_port": "6680",
+        "mpd_port": "6600",
+        "mpd_only": true
+    },
+    "mqtt": {
+        "host": "pixie3"
+    },
+    "snapcast": {
+        "host": "media",
+        "opts": ""
+    },
+
+    "dev": false
+}

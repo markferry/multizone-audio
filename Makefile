@@ -17,9 +17,13 @@ ALL_HOSTS := \
 	outside \
 	bedroom-mark \
 
+ALL_LOGICAL := \
+	announcer \
+	everywhere \
+
 ALL_ZONES := \
 	$(ALL_HOSTS) \
-	everywhere \
+	$(ALL_LOGICAL) \
 
 EXP_SERVICES := {snapclient,mopidy}
 
@@ -37,8 +41,10 @@ ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
 ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
 ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
 ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
-ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_HOSTS))
-ALL_HOME_ASSISTANT_INSTALL := $(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml, $(ALL_HOSTS))
+ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_ZONES))
+ALL_HOME_ASSISTANT_INSTALL := \
+	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml, $(ALL_HOSTS)) \
+	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml, $(ALL_LOGICAL))
 
 ALL_CONFIGS := \
 	../snapserver.conf \
@@ -59,7 +65,9 @@ LIVE_CONFIGS := \
 	debian/mopidy@.service \
 	debian/multizone-audio-control.service \
 
-ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
+ALL_SERVICES := \
+	$(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS)) \
+	$(patsubst %, mopidy@%, $(ALL_LOGICAL))
 
 all: $(ALL_CONFIGS)
 
@@ -84,6 +92,9 @@ nginx: $(ALL_NGINX)
 home-assistant: $(ALL_HOME_ASSISTANT)
 
 $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml: home-assistant.%.yaml
+	install -T $^ $@
+
+$(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 	install -T $^ $@
 
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
