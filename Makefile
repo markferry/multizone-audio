@@ -65,7 +65,9 @@ LIVE_CONFIGS := \
 	debian/mopidy@.service \
 	debian/multizone-audio-control.service \
 
-ALL_SERVICES := $(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS))
+ALL_SERVICES := \
+	$(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS)) \
+	$(patsubst %, mopidy@%, $(ALL_LOGICAL))
 
 all: $(ALL_CONFIGS)
 
