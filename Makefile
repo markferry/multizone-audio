@@ -6,14 +6,13 @@ LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
 VENV := .venv
 SYSTEMCTL_USER ?=
 
-EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
-
 ALL_HOSTS := \
 	study \
 	kitchen \
 	library \
 	lounge \
 	ballroom \
+	ballroom-patio \
 	outside \
 	bedroom-mark \
 

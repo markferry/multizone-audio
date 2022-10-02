@@ -124,6 +124,22 @@
             },
             "announcer_streams": ["announcer"],
             "streams": ["spotify", "airplay", "iris"]
+        },
+        {
+            "name": "ballroom-patio",
+            "Name": "Ballroom Patio",
+            "airplay": {
+                "port": "5113"
+            },
+            "snapcast": {
+                "volume": 90
+            },
+            "spotify": {
+              "event": "librespot-event.sh",
+              "zeroconf": "398l3"
+            },
+            "announcer_streams": ["announcer"],
+            "streams": ["spotify", "airplay", "iris"]
         }
     ],
 

@@ -1,6 +1,7 @@
 {
-    "name": "ballroom",
-    "Name": "Ballroom",
+    "name": "ballroom-patio",
+    "name_": "ballroom_patio",
+    "Name": "Ballroom Patio",
 
     "path": {
         "media-root": "/mnt/md6-media",
@@ -9,21 +10,18 @@
 
     "mopidy": {
         "host": "media",
-        "http_port": "6689",
-        "mpd_port": "6609"
+        "http_port": "6693",
+        "mpd_port": "6613"
     },
     "airplay": {
-        "port": "5109"
+        "port": "5113"
     },
     "mqtt": {
         "host": "pixie3"
     },
-    "kodi": {
-      "port": 8080
-    },
     "snapcast": {
         "host": "media",
-        "opts": "-s ALSA --mixer=hardware"
+        "opts": "-s Device --mixer=hardware:Speaker"
     },
 
     "dev": false
