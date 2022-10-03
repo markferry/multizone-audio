@@ -7,14 +7,13 @@ LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 VENV := .venv
 SYSTEMCTL_USER ?=
 
-EXP_HOSTS := {kitchen,library,outside,bedroom-mark}
-
 ALL_HOSTS := \
 	study \
 	kitchen \
 	library \
 	lounge \
 	ballroom \
+	ballroom-patio \
 	outside \
 	bedroom-mark \
 
