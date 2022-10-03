@@ -1,4 +1,4 @@
-upstream mopidy-host {
+upstream mopidy-{{name}}-host {
     # workaround upstream DNS resolution failure
     server {{mopidy.host}}:{{mopidy.http_port}};
     keepalive 5;
@@ -17,7 +17,7 @@ server {
     }
 
     location / {
-        proxy_pass http://mopidy-host;
+        proxy_pass http://mopidy-{{name}}-host;
         proxy_set_header Host $host;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
