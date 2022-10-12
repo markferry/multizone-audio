@@ -132,14 +132,14 @@ doc_root = /usr/share/snapserver/snapweb
 stream = alsa://?name=Barn Chromecast{{#chromecast.device}}&device={{.}}{{/chromecast.device}}&idle_threshold=500&silence_threshold_percent=2.0
 
 {{#announcers}}
-stream = pipe:///tmp/mopidy.{{.}}?name={{.}}&sampleformat=48000:16:2&codec=flac
+stream = pipe:///tmp/mopidy.{{name}}?name={{name}}&sampleformat=48000:16:2&codec=flac
 {{/announcers}}
 
 {{#hosts}}
 # {{name}}
 stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
+stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{path.config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
 
 stream = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}{{#other_streams}}{{.}}/{{/other_streams}}?name={{Name}}
 
@@ -148,8 +148,8 @@ stream = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}-
 {{#party-zones}}
 # {{Name}}
 stream = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
-stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{config_root}}/shairport-sync.{{name}}.conf
-stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
+stream = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
+stream = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{path.config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
 
 stream = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}?name={{Name}}
 

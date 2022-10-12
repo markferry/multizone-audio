@@ -1,42 +1,42 @@
 [core]
-cache_dir = {{path.media-root}}/{{path.music-metadata}}/mopidy/cache
+cache_dir = {{path.media_root}}/{{path.music_metadata}}/mopidy/cache
 config_dir = /etc/mopidy
-data_dir = {{path.media-root}}/{{path.music-metadata}}/mopidy/lib
+data_dir = {{path.media_root}}/{{path.music_metadata}}/mopidy/lib
 
 [logging]
 config_file = /etc/mopidy/logging.conf
-debug_file = /var/log/mopidy/mopidy-debug.{{name}}.log
+debug_file = /var/log/mopidy/mopidy-debug.{{zone.name}}.log
 
 [audio]
-output = audioresample ! audioconvert ! rgvolume ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/mopidy.{{name}}
+output = audioresample ! audioconvert ! rgvolume ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/mopidy.{{zone.name}}
 mixer_volume = 20
 
 [mqtt]
 host = {{mqtt.host}}
 port = 1883
-topic = media/{{name}}/mopidy
+topic = media/{{zone.name}}/mopidy
 
 [mpd]
 enabled = true
 hostname = ::
-port = {{mopidy.mpd_port}}
-zeroconf = {{Name}} Mopidy
+port = {{zone.mopidy.mpd_port}}
+zeroconf = {{zone.Name}} Mopidy
 
-{{^mopidy.mpd_only}}
+{{^zone.mopidy.mpd_only}}
 [file]
 enabled = true
 media_dirs =
-    {{path.media-root}}/music/library
+    {{path.media_root}}/music/library
 
 [local]
 enabled = true
-media_dir = {{path.media-root}}/music/library
+media_dir = {{path.media_root}}/music/library
 library = sqlite
 scan_flush_threshold = 100
 
 [m3u]
 enabled = true
-playlists_dir = {{path.media-root}}/{{path.music-metadata}}/playlists
+playlists_dir = {{path.media_root}}/{{path.music_metadata}}/playlists
 
 [spotify]
 enabled = false
@@ -56,13 +56,13 @@ enabled = false
 [http]
 enabled = true
 hostname = ::
-port = {{mopidy.http_port}}
-zeroconf = {{Name}} Mopidy
+port = {{zone.mopidy.http_port}}
+zeroconf = {{zone.Name}} Mopidy
 
 [iris]
 country = GB
 locale = en_GB
 snapcast_enabled = true
 snapcast_host = {{snapcast.host}}
-{{/mopidy.mpd_only}}
+{{/zone.mopidy.mpd_only}}
 # vi: filetype=dosini

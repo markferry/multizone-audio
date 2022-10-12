@@ -1,3 +1,4 @@
+{{#zone}}
 media_player:
   - platform: mpd
     {{! use slugified name if available}}
@@ -20,3 +21,4 @@ media_player:
       {{#kodi}}
       - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_kodi
       {{/kodi}}
+{{/zone}}

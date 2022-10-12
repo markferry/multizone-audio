@@ -1,3 +1,5 @@
+config ?= config.json
+
 SHELL := /bin/bash   # for curly-brace expansion
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
@@ -79,6 +81,7 @@ $(CHEVRON): venv
 else
   CHEVRON := $(SYS_CHEVRON)
 endif
+RENDER := render.py
 
 $(VENV):
 	$(info "No chevron in $(PATH). Installing in $(VENV)")
@@ -99,45 +102,45 @@ $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
-dietpi/%.service: templates/dietpi/%.service.template players.json $(CHEVRON)
-	$(CHEVRON) -d players.json $<  > $@
+dietpi/%.service: templates/dietpi/%.service.template $(config) $(RENDER)
+	python $(RENDER) -d $(config) $<  > $@
 
-dev/%.service: templates/dev/%.service.template players.json $(CHEVRON)
+dev/%.service: templates/dev/%.service.template $(config) $(RENDER)
 	-@mkdir -p dev
-	$(CHEVRON) -d players.json $<  > $@
+	python $(RENDER) -d $(config) $<  > $@
 
-dev/%.service: templates/%.service.template players.json $(CHEVRON)
+dev/%.service: templates/%.service.template $(config) $(RENDER)
 	-@mkdir -p dev
-	$(CHEVRON) -d players.json $<  > $@
+	python $(RENDER) -d $(config) $<  > $@
 
-debian/%.service: templates/debian/%.service.template players.json $(CHEVRON)
+debian/%.service: templates/debian/%.service.template $(config) $(RENDER)
 	-@mkdir -p debian
-	$(CHEVRON) -d players.json $<  > $@
+	python $(RENDER) -d $(config) $<  > $@
 
-debian/%.service: templates/%.service.template players.json $(CHEVRON)
+debian/%.service: templates/%.service.template $(config) $(RENDER)
 	-@mkdir -p debian
-	$(CHEVRON) -d players.json $<  > $@
+	python $(RENDER) -d $(config) $<  > $@
 
-../snapserver.conf: templates/snapserver.template players.json $(CHEVRON)
-	$(CHEVRON) -d players.json $<  > $@
+../snapserver.conf: templates/snapserver.template $(config) $(RENDER)
+	python $(RENDER) -d $(config) $<  > $@
 
-snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template players.json $(CHEVRON)
-	$(CHEVRON) -d players.json $<  > $@
+snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(config) $(RENDER)
+	python $(RENDER) -d $(config) $<  > $@
 
-mopidy.%.conf: %.json templates/mopidy.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/mopidy.template > $@
+mopidy.%.conf: $(config) templates/mopidy.template $(RENDER)
+	python $(RENDER) -z $* -d $< templates/mopidy.template > $@
 
-snapclient.%.conf: %.json templates/snapclient.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/snapclient.template > $@
+snapclient.%.conf: $(config) templates/snapclient.template $(RENDER)
+	python $(RENDER) -z $* -d $< templates/snapclient.template > $@
 
-shairport-sync.%.conf: %.json templates/shairport-sync.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
+	python $(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
 
-iris.%.conf: %.json templates/iris.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/iris.template > $@
+iris.%.conf: $(config) templates/iris.template $(RENDER)
+	python $(RENDER) -z $* -d $< templates/iris.template > $@
 
-home-assistant.%.yaml: %.json templates/home-assistant.yaml.template $(CHEVRON)
-	$(CHEVRON) -d $< templates/home-assistant.yaml.template > $@
+home-assistant.%.yaml: $(config) templates/home-assistant.yaml.template
+	python $(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
 
 
 snapserver: ../snapserver.conf

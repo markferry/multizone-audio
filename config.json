@@ -1,0 +1,243 @@
+{
+  "path": {
+    "config_root": "/etc/multizone-audio",
+    "media_root": "/mnt/md6-media",
+    "music_metadata": "music/metadata"
+  },
+  "mqtt": {
+    "host": "pixie3"
+  },
+  "python": "python3",
+  "chromecast": {
+    "device": "default:CARD=Device"
+  },
+  "mopidy": {
+    "host": "media"
+  },
+  "snapcast": {
+    "host": "media"
+  },
+  "spotify": {
+    "event": "librespot-event.sh"
+  },
+  "hosts": [
+    {
+      "name": "study",
+      "Name": "Study",
+      "airplay": {
+        "port": "5106"
+      },
+      "kodi": {
+        "port": 8080
+      },
+      "mopidy": {
+        "http_port": "6686",
+        "mpd_port": "6606"
+      },
+      "spotify": {
+        "zeroconf": "39806"
+      },
+      "snapcast": {
+        "opts": "--mixer=hardware",
+        "volume": 100
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "library",
+      "Name": "Library",
+      "airplay": {
+        "port": "5107"
+      },
+      "mopidy": {
+        "http_port": "6687",
+        "mpd_port": "6607"
+      },
+      "snapcast": {
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 45
+      },
+      "spotify": {
+        "zeroconf": "39807"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "lounge",
+      "Name": "Lounge",
+      "airplay": {
+        "port": "5108"
+      },
+      "kodi": {
+        "port": 8080
+      },
+      "mopidy": {
+        "host": "media",
+        "http_port": "6688",
+        "mpd_port": "6608"
+      },
+      "snapcast": {
+        "opts": "--mixer=hardware",
+        "volume": 100
+      },
+      "spotify": {
+        "zeroconf": "39808"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "ballroom",
+      "Name": "Ballroom",
+      "airplay": {
+        "port": "5109"
+      },
+      "kodi": {
+        "port": 8080
+      },
+      "mopidy": {
+        "http_port": "6689",
+        "mpd_port": "6609"
+      },
+      "snapcast": {
+        "opts": "-s ALSA --mixer=hardware",
+        "volume": 100
+      },
+      "spotify": {
+        "zeroconf": "39809"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "outside",
+      "Name": "Outside",
+      "airplay": {
+        "port": "5110"
+      },
+      "mopidy": {
+        "http_port": "6690",
+        "mpd_port": "6610"
+      },
+      "snapcast": {
+        "opts": "-s b1 --mixer=hardware:HDMI",
+        "volume": 100
+      },
+      "spotify": {
+        "zeroconf": "39810"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "kitchen",
+      "Name": "Kitchen",
+      "airplay": {
+        "port": "5111"
+      },
+      "mopidy": {
+        "http_port": "6691",
+        "mpd_port": "6611"
+      },
+      "snapcast": {
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 65
+      },
+      "spotify": {
+        "zeroconf": "39811"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"],
+      "other_streams": ["Barn Chromecast"]
+    },
+    {
+      "name": "bedroom-mark",
+      "name_": "bedroom_mark",
+      "Name": "Bedroom Mark",
+      "airplay": {
+        "port": "5112"
+      },
+      "mopidy": {
+        "http_port": "6692",
+        "mpd_port": "6612"
+      },
+      "snapcast": {
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 100
+      },
+      "spotify": {
+        "zeroconf": "39812"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "ballroom-patio",
+      "name_": "ballroom_patio",
+      "Name": "Ballroom Patio",
+      "airplay": {
+        "port": "5113"
+      },
+      "mopidy": {
+        "http_port": "6693",
+        "mpd_port": "6613"
+      },
+      "snapcast": {
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 90
+      },
+      "spotify": {
+        "zeroconf": "398l3"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    }
+  ],
+  "announcers": [
+    {
+      "name": "announcer",
+      "Name": "Announcer",
+      "mopidy": {
+        "http_port": "6680",
+        "mpd_port": "6600",
+        "mpd_only": true
+      },
+      "snapcast": {
+        "opts": ""
+      },
+      "dev": false
+    }
+  ],
+  "party-zones": [
+    {
+      "name": "everywhere",
+      "Name": "Everywhere",
+      "airplay": {
+        "port": "5101"
+      },
+      "mopidy": {
+        "http_port": "6681",
+        "mpd_port": "6601"
+      },
+      "snapcast": {
+        "opts": ""
+      },
+      "spotify": {
+        "zeroconf": "39801"
+      },
+      "streams": ["spotify", "airplay", "iris"],
+      "clients": [
+        "study",
+        "kitchen",
+        "lounge",
+        "library",
+        "ballroom",
+        "ballroom-patio",
+        "outside",
+        "bedroom-mark"
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@ Description=Multizone Audio Controller
 After=network.target
 
 [Service]
-ExecStart={{python}} {{config_root}}/controller/multizone-control.py
+ExecStart={{python}} {{path.config_root}}/controller/multizone-control.py
 User=mopidy
 Restart=on-failure
 
