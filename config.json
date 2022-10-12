@@ -39,7 +39,7 @@
       },
       "snapcast": {
         "opts": "--mixer=hardware",
-        "volume": 100
+        "volume": 76
       },
       "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"]
@@ -56,7 +56,7 @@
       },
       "snapcast": {
         "opts": "-s Device --mixer=hardware:Speaker",
-        "volume": 45
+        "volume": 50
       },
       "spotify": {
         "zeroconf": "39807"
@@ -79,7 +79,7 @@
       },
       "snapcast": {
         "opts": "--mixer=hardware",
-        "volume": 100
+        "volume": 75
       },
       "spotify": {
         "zeroconf": "39808"
@@ -102,7 +102,7 @@
       },
       "snapcast": {
         "opts": "-s ALSA --mixer=hardware",
-        "volume": 100
+        "volume": 75
       },
       "spotify": {
         "zeroconf": "39809"
@@ -122,7 +122,7 @@
       },
       "snapcast": {
         "opts": "-s b1 --mixer=hardware:HDMI",
-        "volume": 100
+        "volume": 80
       },
       "spotify": {
         "zeroconf": "39810"
@@ -163,7 +163,7 @@
       },
       "snapcast": {
         "opts": "-s Device --mixer=hardware:Speaker",
-        "volume": 100
+        "volume": 80
       },
       "spotify": {
         "zeroconf": "39812"
