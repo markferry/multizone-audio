@@ -186,7 +186,7 @@
         "volume": 90
       },
       "spotify": {
-        "zeroconf": "398l3"
+        "zeroconf": "39813"
       },
       "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"]
