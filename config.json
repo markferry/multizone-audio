@@ -61,7 +61,6 @@
       "spotify": {
         "zeroconf": "39807"
       },
-      "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"]
     },
     {
@@ -148,7 +147,6 @@
       "spotify": {
         "zeroconf": "39811"
       },
-      "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"],
       "other_streams": ["Barn Chromecast"]
     },
@@ -170,7 +168,6 @@
       "spotify": {
         "zeroconf": "39812"
       },
-      "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"]
     },
     {
