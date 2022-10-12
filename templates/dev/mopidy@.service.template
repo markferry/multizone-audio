@@ -11,7 +11,7 @@ After=sound.target
 
 [Service]
 #User=mopidy
-ExecStart={{python}} /usr/bin/mopidy --config /usr/share/mopidy/conf.d:{{config_root}}/mopidy.%i.conf
+ExecStart={{python}} /usr/bin/mopidy --config /usr/share/mopidy/conf.d:{{path.config_root}}/mopidy.%i.conf
 
 [Install]
 WantedBy=multi-user.target
