@@ -1,4 +1,5 @@
-# defaults file for snapclient instance 0
+{{#zone}}
+# defaults file for snapclient {{name}} instance
 
 # start snapclient automatically?
 START_SNAPCLIENT=true
@@ -25,3 +26,4 @@ START_SNAPCLIENT=true
 USER_OPTS="--user snapclient:audio"
 
 SNAPCLIENT_OPTS="-h {{snapcast.host}} --hostID={{name}} {{snapcast.opts}}"
+{{/zone}}
