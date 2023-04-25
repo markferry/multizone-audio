@@ -1,6 +1,6 @@
 .venv
 systemd/*.service
 snapcast-autoconfig.yaml
-*.conf
+./*.conf
 home-assistant.*.yaml
 server.multizone-audio.json
