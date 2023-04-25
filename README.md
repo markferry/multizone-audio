@@ -23,6 +23,8 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
 
 # Architecture
 
+![Multi Zone Architecture](multizone-audio.png)
+
 Almost all media services run on a central media server.
 
 Each media player is its own zone and there are also multiple (logical) "party zones" which group the real zones together.
@@ -218,6 +220,28 @@ cd /etc/multizone-audio
 git checkout $your_branch   # your customizations
 make live-install
 ```
+
+### Clients
+
+For all client hosts:
+
+```bash
+git clone https://github.com/markferry/multizone-audio.git /etc/multizone-audio
+cd /etc/multizone-audio
+git checkout $your_branch   # your customizations
+```
+
+Then run the client-specific-install `make $os-$host-install`
+
+Where `$os` is one of: `debian`, `dietpi`.
+
+And `$host` is a host defined in `config.json`.
+
+e.g.:
+```bash
+make dietpi-library-install
+```
+
 
 # Resources
 
