@@ -1,0 +1,16 @@
+[Unit]
+Description=Bluetooth Agent
+Requires=bluetooth.service
+After=bluetooth.service
+
+[Service]
+ExecStartPre=/usr/bin/bluetoothctl discoverable on
+ExecStartPre=/usr/bin/hciconfig %I piscan
+ExecStartPre=/usr/bin/hciconfig %I sspmode 1
+ExecStart=/usr/bin/bt-agent --capability=NoInputNoOutput
+RestartSec=5
+Restart=always
+KillSignal=SIGUSR1
+
+[Install]
+WantedBy=multi-user.target
