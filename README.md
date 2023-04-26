@@ -23,7 +23,7 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
 
 # Architecture
 
-![Multi Zone Architecture](multizone-audio.png)
+![Multi Zone Architecture](multizone-audio.svg)
 
 Almost all media services run on a central media server.
 
