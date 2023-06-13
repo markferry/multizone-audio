@@ -12,6 +12,7 @@ After=sound.target
 [Service]
 User=mopidy
 PermissionsStartOnly=true
+Restart=on-failure
 ExecStartPre=/bin/mkdir -p /var/cache/mopidy
 ExecStartPre=/bin/chown mopidy:audio /var/cache/mopidy
 ExecStart=/usr/local/bin/mopidy --config /usr/share/mopidy/conf.d:{{path.config_root}}/mopidy.%i.conf
