@@ -1,7 +1,3 @@
----
-title: README
----
-
 A **config generator** for a multizone audio system based on snapcast, Mopidy and MQTT.
 
 # Features
@@ -10,7 +6,6 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
   - [x] SpotifyConnect
   - [x] Airplay
   - [x] Mopidy/MPD
-  - [x] Airplay
   - [x] Kodi
   - [ ] Bluetooth
 - [x] seamless switching between protocols in each zone
