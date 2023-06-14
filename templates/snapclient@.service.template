@@ -9,6 +9,8 @@ EnvironmentFile={{path.config_root}}/snapclient.%i.conf
 Type=simple
 ExecStart=/usr/bin/snapclient --logsink=system $SNAPCLIENT_OPTS
 Restart=on-failure
+User=snapclient
+Group=snapclient
 
 [Install]
 WantedBy=multi-user.target
