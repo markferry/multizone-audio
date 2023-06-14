@@ -8,6 +8,7 @@ Wants=avahi-daemon.service
 EnvironmentFile={{path.config_root}}/snapclient.%i.conf
 Type=simple
 ExecStart=/usr/bin/snapclient --logsink=system $SNAPCLIENT_OPTS
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
