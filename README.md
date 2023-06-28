@@ -4,6 +4,8 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
 
 - [ ] support for common audio streaming protocols
   - [x] SpotifyConnect
+    - [x] track transitions (crossfade and automix)
+    - [ ] player controls
   - [x] Airplay
   - [x] Mopidy/MPD
   - [x] Kodi
@@ -52,7 +54,10 @@ See [BUILDING](BUILDING.md) for notes on building some of these from sources.
 
 - Debian 10+ "Buster"
 - [snapserver v0.27+](https://github.com/badaix/snapcast)
-- [librespot](https://github.com/librespot-org/librespot) (_TODO:_ replace with [librespot-java](https://github.com/librespot-org/librespot-java))
+- [librespot-java](https://github.com/librespot-org/librespot-java)
+    - java
+    - librespot-api-1.6.3.jar
+    - default install dir is assumed to be `/opt/librespot`
 - [shairport-sync](https://github.com/mikebrady/shairport-sync)
   - 3.3.8-OpenSSL-Avahi-ALSA-stdout-pipe-soxr-metadata-mqtt-sysconfdir:/etc
   - build with mqtt
@@ -120,8 +125,6 @@ be implemented as:
 - an extension to [hifiberry's audiocontrol2](https://github.com/hifiberry/audiocontrol2),
 - a [HomeAssistant automation](https://www.home-assistant.io/integrations/mqtt/).
 
-Using `librespot-java` instead of `librespot` the controller could control
-specific SpotifyConnect players, making snapcast meta streams unnecessary.
 
 ## Volume Control
 
