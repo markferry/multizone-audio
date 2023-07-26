@@ -223,7 +223,7 @@ dietpi-%-install: iris.%.conf dietpi/nginx.override.conf install-bluetooth
 
 # bluez-alsa is in: Raspbian 10 (but not installable) and Raspbian 12+
 dietpi-install-bluetooth:
-	apt-get install -y --no-install-recommends bluetooth bluez-tools bluez-alsa
+	apt-get install -y --no-install-recommends bluetooth bluez-tools bluez-alsa-utils
 
 clean:
 	-rm $(ALL_CONFIGS)
