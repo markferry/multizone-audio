@@ -208,6 +208,7 @@ install-bluetooth:
 	install -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
 	install -m 0775 -t /usr/local/bin/ bluetooth/bluetooth-udev
 	install -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
+	rfkill unblock bluetooth
 
 debian-%-install: iris.%.conf debian/nginx.override.conf install-bluetooth
 	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
