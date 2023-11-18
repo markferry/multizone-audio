@@ -10,7 +10,7 @@
   },
   "python": "python3",
   "chromecast": {
-    "device": "default:CARD=Device"
+    "device": "default:CARD=ICUSBAUDIO7D"
   },
   "mopidy": {
     "host": "media",
