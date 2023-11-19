@@ -13,7 +13,8 @@
     "device": "default:CARD=Device"
   },
   "mopidy": {
-    "host": "media"
+    "host": "media",
+    "path": "/var/lib/mopidy/bin/mopidy"
   },
   "snapcast": {
     "host": "media"
