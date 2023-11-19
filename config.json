@@ -38,6 +38,7 @@
         "zeroconf": "39806"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "--mixer=hardware",
         "volume": 76
       },
@@ -55,6 +56,7 @@
         "mpd_port": "6607"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "-s Device --mixer=hardware:Speaker",
         "volume": 50
       },
@@ -78,6 +80,7 @@
         "mpd_port": "6608"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "-s iec958",
         "volume": 75
       },
@@ -101,6 +104,7 @@
         "mpd_port": "6609"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "-s ALSA --mixer=hardware",
         "volume": 75
       },
@@ -121,6 +125,7 @@
         "mpd_port": "6610"
       },
       "snapcast": {
+        "latency": 30,
         "opts": "-s b1 --mixer=hardware:HDMI",
         "volume": 80
       },
@@ -141,6 +146,7 @@
         "mpd_port": "6611"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "-s Device --mixer=hardware:Speaker",
         "volume": 65
       },
@@ -162,6 +168,7 @@
         "mpd_port": "6612"
       },
       "snapcast": {
+        "latency": 0,
         "opts": "-s Device --mixer=hardware:Speaker",
         "volume": 80
       },
@@ -182,6 +189,7 @@
         "mpd_port": "6613"
       },
       "snapcast": {
+        "latency": -50,
         "opts": "-s Device --mixer=hardware:Speaker",
         "volume": 90
       },
@@ -202,6 +210,7 @@
         "mpd_only": true
       },
       "snapcast": {
+        "latency": 0,
         "opts": ""
       },
       "dev": false
@@ -219,6 +228,7 @@
         "mpd_port": "6601"
       },
       "snapcast": {
+        "latency": 0,
         "opts": ""
       },
       "spotify": {
