@@ -42,6 +42,7 @@ DEBIAN_UNITS := \
 ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
 ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
 ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
+ALL_SPOTIFY := $(patsubst %, librespot.%.toml, $(ALL_HOSTS))
 ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
 ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_ZONES))
 ALL_HOME_ASSISTANT_INSTALL := \
@@ -55,6 +56,7 @@ ALL_CONFIGS := \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
 	$(ALL_HOME_ASSISTANT) \
+	$(ALL_SPOTIFY) \
 	$(ALL_SNAPCLIENTS) \
 
 DEV_CONFIGS := \
@@ -135,6 +137,9 @@ snapclient.%.conf: $(config) templates/snapclient.template $(RENDER)
 
 shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
 	python $(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+
+librespot.%.toml: $(config) templates/librespot.template $(RENDER)
+	python $(RENDER) -z $* -d $< templates/librespot.template > $@
 
 iris.%.conf: $(config) templates/iris.template $(RENDER)
 	python $(RENDER) -z $* -d $< templates/iris.template > $@
