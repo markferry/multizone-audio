@@ -2,7 +2,8 @@
   "path": {
     "config_root": "/etc/multizone-audio",
     "media_root": "/mnt/md6-media",
-    "music_metadata": "music/metadata"
+    "music_metadata": "music/metadata",
+    "java": "/usr/bin/java"
   },
   "mqtt": {
     "host": "pixie3"
@@ -18,7 +19,8 @@
     "host": "media"
   },
   "spotify": {
-    "event": "librespot-event.sh"
+    "event": "librespot-event.sh",
+    "jar": "/opt/librespot/librespot-api-1.6.3.jar"
   },
   "hosts": [
     {
