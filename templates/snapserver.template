@@ -66,7 +66,7 @@ bind_to_address = 0.0.0.0
 
 # serve a website from the doc_root location
 # disabled if commented or empty
-doc_root = /usr/share/snapserver/snapweb
+doc_root = {{snapcast.snapweb_root}}{{^snapcast.snapweb_root}}/usr/share/snapserver/snapweb{{/snapcast.snapweb_root}}
 
 # Hostname or IP under which clients can reach this host
 # used to serve cached cover art
