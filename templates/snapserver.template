@@ -147,7 +147,7 @@ source = pipe:///tmp/mopidy.{{name}}?name={{name}}&sampleformat=48000:16:2&codec
 # {{name}}
 source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
 source = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
-source = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{path.config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
+source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml
 
 source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}{{#other_streams}}{{.}}/{{/other_streams}}?name={{Name}}
 
@@ -157,7 +157,7 @@ source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}-
 # {{Name}}
 source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac
 source = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
-source = librespot:///librespot?name=- {{name}} spotify&devicename={{Name}}&bitrate=160&volume=50&onevent={{path.config_root}}/{{spotify.event}}%20{{name}}&params=--zeroconf-port%20{{spotify.zeroconf}}
+source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml
 
 source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}?name={{Name}}
 

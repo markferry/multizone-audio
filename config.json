@@ -2,7 +2,8 @@
   "path": {
     "config_root": "/etc/multizone-audio",
     "media_root": "/mnt/md6-media",
-    "music_metadata": "music/metadata"
+    "music_metadata": "music/metadata",
+    "java": "/usr/bin/java"
   },
   "mqtt": {
     "host": "pixie3"
@@ -18,7 +19,8 @@
     "host": "media"
   },
   "spotify": {
-    "event": "librespot-event.sh"
+    "event": "librespot-event.sh",
+    "jar": "/opt/librespot/librespot-api-1.6.3.jar"
   },
   "hosts": [
     {
@@ -35,6 +37,8 @@
         "mpd_port": "6606"
       },
       "spotify": {
+        "api_port": "24806",
+        "crossfade_ms": "0",
         "zeroconf": "39806"
       },
       "snapcast": {
@@ -61,6 +65,8 @@
         "volume": 50
       },
       "spotify": {
+        "api_port": "24807",
+        "crossfade_ms": "0",
         "zeroconf": "39807"
       },
       "streams": ["spotify", "airplay", "iris"]
@@ -85,6 +91,8 @@
         "volume": 75
       },
       "spotify": {
+        "api_port": "24808",
+        "crossfade_ms": "0",
         "zeroconf": "39808"
       },
       "announcer_streams": ["announcer"],
@@ -109,6 +117,8 @@
         "volume": 75
       },
       "spotify": {
+        "api_port": "24809",
+        "crossfade_ms": "2000",
         "zeroconf": "39809"
       },
       "announcer_streams": ["announcer"],
@@ -130,6 +140,8 @@
         "volume": 80
       },
       "spotify": {
+        "api_port": "24810",
+        "crossfade_ms": "2000",
         "zeroconf": "39810"
       },
       "announcer_streams": ["announcer"],
@@ -151,6 +163,8 @@
         "volume": 65
       },
       "spotify": {
+        "api_port": "24811",
+        "crossfade_ms": "0",
         "zeroconf": "39811"
       },
       "streams": ["spotify", "airplay", "iris"],
@@ -173,6 +187,8 @@
         "volume": 80
       },
       "spotify": {
+        "api_port": "24812",
+        "crossfade_ms": "0",
         "zeroconf": "39812"
       },
       "streams": ["spotify", "airplay", "iris"]
@@ -194,6 +210,8 @@
         "volume": 90
       },
       "spotify": {
+        "api_port": "24813",
+        "crossfade_ms": "0",
         "zeroconf": "39813"
       },
       "announcer_streams": ["announcer"],
@@ -232,6 +250,8 @@
         "opts": ""
       },
       "spotify": {
+        "api_port": "24801",
+        "crossfade_ms": "2000",
         "zeroconf": "39801"
       },
       "streams": ["spotify", "airplay", "iris"],
