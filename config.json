@@ -35,6 +35,7 @@
         "mpd_port": "6606"
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39806"
       },
       "snapcast": {
@@ -61,6 +62,7 @@
         "volume": 50
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39807"
       },
       "streams": ["spotify", "airplay", "iris"]
@@ -85,6 +87,7 @@
         "volume": 75
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39808"
       },
       "announcer_streams": ["announcer"],
@@ -109,6 +112,7 @@
         "volume": 75
       },
       "spotify": {
+        "crossfade_ms": "2000",
         "zeroconf": "39809"
       },
       "announcer_streams": ["announcer"],
@@ -130,6 +134,7 @@
         "volume": 80
       },
       "spotify": {
+        "crossfade_ms": "2000",
         "zeroconf": "39810"
       },
       "announcer_streams": ["announcer"],
@@ -151,6 +156,7 @@
         "volume": 65
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39811"
       },
       "streams": ["spotify", "airplay", "iris"],
@@ -173,6 +179,7 @@
         "volume": 80
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39812"
       },
       "streams": ["spotify", "airplay", "iris"]
@@ -194,6 +201,7 @@
         "volume": 90
       },
       "spotify": {
+        "crossfade_ms": "0",
         "zeroconf": "39813"
       },
       "announcer_streams": ["announcer"],
@@ -232,6 +240,7 @@
         "opts": ""
       },
       "spotify": {
+        "crossfade_ms": "2000",
         "zeroconf": "39801"
       },
       "streams": ["spotify", "airplay", "iris"],
