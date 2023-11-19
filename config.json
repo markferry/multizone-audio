@@ -17,7 +17,8 @@
     "path": "/var/lib/mopidy/bin/mopidy"
   },
   "snapcast": {
-    "host": "media"
+    "host": "media",
+    "snapweb_root": "/var/www/snapweb"
   },
   "spotify": {
     "event": "librespot-event.sh",
