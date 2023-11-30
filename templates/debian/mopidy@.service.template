@@ -15,6 +15,7 @@ PermissionsStartOnly=true
 Restart=on-failure
 ExecStartPre=/bin/mkdir -p /var/cache/mopidy
 ExecStartPre=/bin/chown mopidy:audio /var/cache/mopidy
+ExecStartPre=/bin/chown mopidy:audio /tmp/mopidy.%i
 ExecStart={{#mopidy.path}}{{mopidy.path}}{{/mopidy.path}}{{^mopidy.path}}/usr/local/bin/mopidy{{/mopidy.path}} --config /usr/share/mopidy/conf.d:{{path.config_root}}/mopidy.%i.conf
 
 [Install]
