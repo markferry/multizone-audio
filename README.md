@@ -67,7 +67,7 @@ See [BUILDING](BUILDING.md) for notes on building some of these from sources.
   - Mopidy-Local 3.2.1
   - Mopidy-MPD 3.2.0
   - Mopidy-MQTT-NG 1.0.0
-  - Mopidy-Spotify 4.1.1
+  - [Mopidy-Spotify 5.0.0a2](https://github.com/mopidy/mopidy-spotify)
   - Mopidy-TuneIn 1.1.0
 - [mosquitto MQTT broker](https://mosquitto.org/)
 - [snapcast-autoconfig](https://github.com/ahayworth/snapcast-autoconfig)

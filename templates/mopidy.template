@@ -39,11 +39,16 @@ enabled = true
 playlists_dir = {{path.media_root}}/{{path.music_metadata}}/playlists
 
 [spotify]
+{{#zone.mopidy.spotify}}
+enabled = true
+username = {{username}}
+password = {{password}}
+client_id = {{client_id}}
+client_secret = {{client_secret}}
+{{/zone.mopidy.spotify}}
+{{^zone.mopidy.spotify}}
 enabled = false
-# username =
-# password =
-# client_id =
-# client_secret =
+{{/zone.mopidy.spotify}}
 timeout = 60
 
 [dleyna]
