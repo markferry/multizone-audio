@@ -12,6 +12,9 @@
   "chromecast": {
     "device": "default:CARD=ICUSBAUDIO7D"
   },
+  "home_assistant": {
+    "use_mopidy": false
+  },
   "mopidy": {
     "host": "media",
     "path": "/var/lib/mopidy/bin/mopidy"
