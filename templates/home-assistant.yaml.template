@@ -3,8 +3,8 @@ media_player:
   - platform: mpd
     {{! use slugified name if available}}
     name: {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mpd
-    {{! use localhost for dev, 'media' otherwise}}
-    host: {{#dev}}localhost{{/dev}}{{^dev}}media{{/dev}}
+    {{! use localhost for dev}}
+    host: {{#dev}}localhost{{/dev}}{{^dev}}{{mopidy.host}}{{/dev}}
     port: {{mopidy.mpd_port}}
 {{#kodi}}
 
