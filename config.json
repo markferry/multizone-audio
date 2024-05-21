@@ -227,8 +227,10 @@
     {
       "name": "announcer",
       "Name": "Announcer",
+      "home_assistant": {
+        "use_mopidy": false
+      },
       "mopidy": {
-        "http_port": "6680",
         "mpd_port": "6600",
         "mpd_only": true
       },
