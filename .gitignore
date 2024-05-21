@@ -4,3 +4,5 @@ snapcast-autoconfig.yaml
 ./*.conf
 home-assistant.*.yaml
 server.multizone-audio.json
+build
+install
