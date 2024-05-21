@@ -97,6 +97,9 @@
         "crossfade_ms": "0",
         "zeroconf": "39808"
       },
+      "bluetooth": {
+        "pcm": "iec958:CARD=ICUSBAUDIO7D,DEV=0"
+      },
       "announcer_streams": ["announcer"],
       "streams": ["spotify", "airplay", "iris"]
     },
