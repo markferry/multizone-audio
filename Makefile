@@ -1,6 +1,8 @@
-config ?= config.json
-config_in := $(config)
+config_in ?= config.json
+output_dir ?= build
+install_dir ?= /etc/multizone-audio
 
+CONFIG := $(output_dir)/config.out.json
 SHELL := /bin/bash   # for curly-brace expansion
 
 MUSIC_METADATA_DIR := /mnt/media/music/metadata
@@ -35,25 +37,29 @@ DEBIAN_UNITS := \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/mopidy@.service \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
 
-ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
-ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
-ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
-ALL_SPOTIFY := $(patsubst %, go-librespot.%.yaml, $(ALL_ZONES))
-ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
-ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_ZONES))
+ALL_MOPIDY := $(patsubst %, $(output_dir)/mopidy.%.conf, $(ALL_ZONES))
+ALL_AIRPLAY := $(patsubst %, $(output_dir)/shairport-sync.%.conf, $(ALL_HOSTS))
+ALL_SNAPCLIENTS := $(patsubst %, $(output_dir)/snapclient.%.conf, $(ALL_HOSTS))
+ALL_SPOTIFY := $(patsubst %, $(output_dir)/go-librespot.%.yaml, $(ALL_ZONES))
+ALL_NGINX := $(patsubst %, $(output_dir)/iris.%.conf, $(ALL_HOSTS))
+ALL_HOME_ASSISTANT := $(patsubst %, $(output_dir)/home-assistant.%.yaml, $(ALL_ZONES))
 ALL_HOME_ASSISTANT_INSTALL := \
 	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml, $(ALL_HOSTS)) \
 	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml, $(ALL_LOGICAL))
 
-ALL_CONFIGS := \
-	../snapserver.conf \
-	snapcast-autoconfig.yaml \
+ALL_MZ_CONFIGS := \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
 	$(ALL_HOME_ASSISTANT) \
 	$(ALL_SPOTIFY) \
 	$(ALL_SNAPCLIENTS) \
+
+ALL_CONFIGS := \
+	$(CONFIG) \
+	$(output_dir)/snapserver.conf \
+	$(output_dir)/snapcast-autoconfig.yaml \
+	$(ALL_MZ_CONFIGS) \
 
 DEV_CONFIGS := \
 	dev/snapserver.service \
@@ -76,6 +82,18 @@ ALL_SERVICES := \
 	$(patsubst %, mopidy@%, $(ALL_LOGICAL))
 
 all: $(ALL_CONFIGS)
+install: $(ALL_CONFIGS) install-snapserver
+	install -t $(install_dir) $(ALL_MZ_CONFIGS)
+
+install-snapserver: $(output_dir)/snapserver.conf
+	install -T $< /etc
+
+
+# Config, substituting specific envvars
+$(CONFIG): $(config_in)
+	set -a; . .env; install_dir=$(install_dir) output_dir=$(output_dir) envsubst < $< > $@
+
+config: $(CONFIG)
 
 # Find chevron or create a venv and install it
 SYS_CHEVRON := $(shell which chevron 2>/dev/null || true)
@@ -112,54 +130,54 @@ $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
-dietpi/%.service: templates/dietpi/%.service.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dietpi/%.service: templates/dietpi/%.service.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-dev/%.service: templates/dev/%.service.template $(config) $(RENDER)
-	-@mkdir -p dev
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dev/%.service: templates/dev/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/dev
+	$(RENDER) -d $(CONFIG) $< > $@
 
-dev/%.service: templates/%.service.template $(config) $(RENDER)
-	-@mkdir -p dev
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dev/%.service: templates/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/dev
+	$(RENDER) -d $(CONFIG) $< > $@
 
-debian/%.service: templates/debian/%.service.template $(config) $(RENDER)
-	-@mkdir -p debian
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/debian/%.service: templates/debian/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/debian
+	$(RENDER) -d $(CONFIG) $< > $@
 
-debian/%.service: templates/%.service.template $(config) $(RENDER)
-	-@mkdir -p debian
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/debian/%.service: templates/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/debian
+	$(RENDER) -d $(CONFIG) $< > $@
 
-../snapserver.conf: templates/snapserver.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/snapserver.conf: templates/snapserver.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-mopidy.%.conf: $(config) templates/mopidy.template $(RENDER)
+$(output_dir)/mopidy.%.conf: $(CONFIG) templates/mopidy.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/mopidy.template > $@
 
-snapclient.%.conf: $(config) templates/snapclient.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/snapclient.template > $@
+$(output_dir)/snapclient.%.conf: $(CONFIG) templates/snapclient.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/snapclient.template> $@
 
-shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+$(output_dir)/shairport-sync.%.conf: $(CONFIG) templates/shairport-sync.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@
 
-librespot.%.toml: $(config) templates/librespot.template $(RENDER)
+$(output_dir)/librespot.%.toml: $(CONFIG) templates/librespot.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/librespot.template > $@
 
-go-librespot.%.yaml: $(config) templates/go-librespot.yaml $(RENDER)
+$(output_dir)/go-librespot.%.yaml: $(CONFIG) templates/go-librespot.yaml $(RENDER)
 	$(RENDER) -z $* -d $< templates/go-librespot.yaml > $@
 
-iris.%.conf: $(config) templates/iris.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/iris.template > $@
+$(output_dir)/iris.%.conf: $(CONFIG) templates/iris.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/iris.template> $@
 
-home-assistant.%.yaml: $(config) templates/home-assistant.yaml.template
+$(output_dir)/home-assistant.%.yaml: $(CONFIG) templates/home-assistant.yaml.template
 	$(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
 
 
-snapserver: ../snapserver.conf
+snapserver: $(output_dir)/snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
 
 controller: controller/multizone-control.py
