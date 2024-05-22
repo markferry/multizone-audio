@@ -4,10 +4,12 @@ install_dir ?= /etc/multizone-audio
 
 CONFIG := $(output_dir)/config.out.json
 SHELL := /bin/bash   # for curly-brace expansion
+
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
 LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
+SNAPSERVER_CONF := /etc/snapserver.conf
 
 VENV := .venv
 SYSTEMCTL_USER ?=
@@ -67,30 +69,25 @@ ALL_CONFIGS := \
 	$(ALL_MZ_CONFIGS) \
 
 DEV_CONFIGS := \
-	dev/snapserver.service \
-	dev/snapclient@.service \
-	dev/mopidy@.service \
-	dev/multizone-audio-control.service \
+	$(output_dir)/dev/snapserver.service \
+	$(output_dir)/dev/snapclient@.service \
+	$(output_dir)/dev/mopidy@.service \
+	$(output_dir)/dev/multizone-audio-control.service \
 
 LIVE_CONFIGS := \
-	debian/mopidy@.service \
-	debian/multizone-audio-control.service \
+	$(output_dir)/debian/mopidy@.service \
+	$(output_dir)/debian/multizone-audio-control.service \
 
 ALL_SERVICES := \
 	$(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS)) \
 	$(patsubst %, mopidy@%, $(ALL_LOGICAL))
 
 all: $(ALL_CONFIGS)
-install: $(ALL_CONFIGS) install-snapserver
-	install -t $(install_dir) $(ALL_MZ_CONFIGS)
-
-install-snapserver: $(output_dir)/snapserver.conf
-	install -T $< /etc
-
 
 # Config, substituting specific envvars
 $(CONFIG): $(config_in)
-	set -a; . .env; install_dir=$(install_dir) output_dir=$(output_dir) envsubst < $< > $@
+	-@mkdir -p $(output_dir)
+	set -a; . .env 2>/dev/null; install_dir=$(install_dir) output_dir=$(output_dir) envsubst < $< > $@
 
 config: $(CONFIG)
 
@@ -173,10 +170,13 @@ snapserver: $(output_dir)/snapserver.conf
 controller: controller/multizone-control.py
 	systemctl $(SYSTEMCTL_USER) restart multizone-audio-control
 
-restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
+reload:
+	systemctl $(SYSTEMCTL_USER) daemon-reload
+
+restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS) reload
 	systemctl $(SYSTEMCTL_USER) restart $(ALL_SERVICES)
 
-restart-host:
+restart-host: reload
 	systemctl $(SYSTEMCTL_USER) restart $(EXP_SERVICES)@$(HOST)
 
 start: restart snapserver controller
@@ -197,13 +197,13 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 
 # install the systemd unit files in the appropriate place
 
-$(DEV_SYSTEMD_CONFIG_DIR)/%.service: dev/%.service
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
-$(DEV_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
-$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: debian/%.service
+$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/debian/%.service
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
 
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
@@ -212,12 +212,14 @@ $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
 dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
 
 dev-install: dev $(DEV_UNITS)
-	systemctl $(SYSTEMCTL_USER) daemon-reload
+	install -D -t $(install_dir) $(ALL_MZ_CONFIGS)
+	install $(output_dir)/snapserver.conf $(install_dir)
 
 debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
 live-install: debian $(DEBIAN_UNITS)
-	systemctl $(SYSTEMCTL_USER) daemon-reload
+	install -t $(install_dir) $(ALL_MZ_CONFIGS)
+	install -T $(output_dir)/snapserver.conf $(SNAPSERVER_CONF)
 
 # Player install
 #
@@ -230,7 +232,7 @@ dietpi-%-install: dietpi iris.%.conf dietpi/nginx.override.conf
 	install -T -D dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 clean:
-	-rm $(ALL_CONFIGS)
+	-rm $(ALL_CONFIGS) $(LIVE_CONFIGS) $(DEV_CONFIGS)
 
 # Documentation
 %.html: %.md Makefile
