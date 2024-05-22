@@ -16,7 +16,10 @@ LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
 SNAPSERVER_CONF := /etc/snapserver.conf
 
 VENV := .venv
-SYSTEMCTL_USER ?=
+
+ifneq ($(shell id -u),0)
+	SYSTEMCTL_USER = --user
+endif
 
 # query config.in for zone names
 ALL_HOSTS := $(shell python -c 'import json,sys;j=json.load(sys.stdin);print(" ".join([z["name"] for z in j["hosts"]]))' < $(config_in))

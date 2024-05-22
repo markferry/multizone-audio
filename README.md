@@ -203,8 +203,7 @@ Generate configs and start all services:
 
 ```bash
 make dev install_dir=$(pwd)/test  # requires an absolute path
-make dev-install  # this will overwrite files in ~/.config/systemd/user!
-# set `SYSTEMCTL_USER := --user` in the Makefile
+make dev-install install_dir=$(pwd)/test  # this will overwrite files in ~/.config/systemd/user!
 make start
 ```
 
