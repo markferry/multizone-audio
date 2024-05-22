@@ -12,7 +12,10 @@ LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 SNAPSERVER_CONF := /etc/snapserver.conf
 
 VENV := .venv
-SYSTEMCTL_USER ?=
+
+ifneq ($(shell id -u),0)
+	SYSTEMCTL_USER = --user
+endif
 
 ALL_HOSTS := \
 	study \
