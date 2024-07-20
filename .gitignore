@@ -1,3 +1,4 @@
+.env
 .venv
 systemd/*.service
 snapcast-autoconfig.yaml
