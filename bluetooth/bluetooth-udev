@@ -4,15 +4,14 @@
 # https://github.com/nicokaiser/rpi-audio-receiver/blob/main/install-bluetooth.sh
 #
 #
-if [[ ! $NAME =~ ^\"([0-9A-F]{2}[:-]){5}([0-9A-F]{2})\"$ ]]; then exit 0; fi
+
+if [ ! $SUBSYSTEM == "input" ] || [ ! $ID_BUS == "bluetooth" ] ; then exit 0; fi
+
 action=$(expr "$ACTION" : "\([a-zA-Z]\+\).*")
 if [ "$action" = "add" ]; then
     bluetoothctl discoverable off
-    # disconnect wifi to prevent dropouts
-    #ifconfig wlan0 down &
 fi
 if [ "$action" = "remove" ]; then
-    # reenable wifi
-    #ifconfig wlan0 up &
+    bluetoothctl pairable on
     bluetoothctl discoverable on
 fi
