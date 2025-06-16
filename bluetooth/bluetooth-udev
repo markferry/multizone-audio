@@ -9,9 +9,11 @@ if [ ! $SUBSYSTEM == "input" ] || [ ! $ID_BUS == "bluetooth" ] ; then exit 0; fi
 
 action=$(expr "$ACTION" : "\([a-zA-Z]\+\).*")
 if [ "$action" = "add" ]; then
+    mosquitto_pub -h {{mqtt.host}} -t "/media/{{zone.name}}/bluetooth/status" -m "connected"
     bluetoothctl discoverable off
 fi
 if [ "$action" = "remove" ]; then
+    mosquitto_pub -h {{mqtt.host}} -t "/media/{{zone.name}}/bluetooth/status" -m "disconnected"
     bluetoothctl pairable on
     bluetoothctl discoverable on
 fi
