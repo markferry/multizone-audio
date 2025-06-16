@@ -5,6 +5,7 @@ HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
 LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
+LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
 
 VENV := .venv
 SYSTEMCTL_USER ?=
@@ -202,13 +203,28 @@ live-install: debian $(DEBIAN_UNITS)
 
 # Player install
 #
-debian-%-install: debian iris.%.conf debian/nginx.override.conf
+install-bluetooth:
+	install -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
+	install -D -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
+	install -m 0775 -t /usr/local/bin/ bluetooth/bluetooth-udev
+	install -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
+	rfkill unblock bluetooth
+
+debian-%-install: iris.%.conf debian/nginx.override.conf install-bluetooth
 	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
 	install -T -D debian/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
-dietpi-%-install: dietpi iris.%.conf dietpi/nginx.override.conf
+# osmc 2022.09+ already has some of these
+debian-install-bluetooth:
+	apt-get install -y --no-install-recommends rfkill bluetooth bluez-tools armv7-bluezalsa-osmc
+
+dietpi-%-install: iris.%.conf dietpi/nginx.override.conf install-bluetooth
 	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
 	install -T -D dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
+
+# bluez-alsa is in: Raspbian 10 (but not installable) and Raspbian 12+
+dietpi-install-bluetooth:
+	apt-get install -y --no-install-recommends rfkill bluetooth bluez-tools bluez-alsa-utils
 
 clean:
 	-rm $(ALL_CONFIGS)

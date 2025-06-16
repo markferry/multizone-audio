@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# From rpi-audio-receiver by nicokaiser
+# https://github.com/nicokaiser/rpi-audio-receiver/blob/main/install-bluetooth.sh
+#
+#
+
+if [ ! $SUBSYSTEM == "input" ] || [ ! $ID_BUS == "bluetooth" ] ; then exit 0; fi
+
+action=$(expr "$ACTION" : "\([a-zA-Z]\+\).*")
+if [ "$action" = "add" ]; then
+    bluetoothctl discoverable off
+fi
+if [ "$action" = "remove" ]; then
+    bluetoothctl pairable on
+    bluetoothctl discoverable on
+fi

@@ -9,7 +9,8 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
   - [x] Airplay
   - [x] Mopidy/MPD
   - [x] Kodi
-  - [ ] Bluetooth
+  - [x] Bluetooth
+    - [x] automatically accept new connections
 - [x] seamless switching between protocols in each zone
 - [x] high-priority announcement streams (alarms, doorbells)
 - [ ] invisible, automatic party reconfiguration
@@ -110,7 +111,7 @@ which implements control of concurrent playback streams via
 
 - snapclient v0.25+
 - nginx
-- dietpi
+- dietpi 9+ (Debian 12 "Bookworm") or [DietPi Bookworm test images](https://dietpi.com/blog/?p=2809))
 - OSMC / Kodi v19+
 - [kodi2mqtt](https://github.com/void-spark/kodi2mqtt)
   - install by manually extracting the zip in `~/.kodi/addons/` on the client
