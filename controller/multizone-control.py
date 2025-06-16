@@ -79,6 +79,19 @@ def on_kodi_play(mosq, obj, msg):
     for m in msgs:
         mosq.publish(m.topic, m.payload)
 
+# bluetooth will pause others but cannot itself be paused
+def on_bluetooth_status(mosq, obj, msg):
+    print("bluetooth: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    if msg.payload == b'connected':
+        zone = parse_zone(msg.topic)
+        msgs = [
+            Message(f"{TOPIC_ROOT}/{zone}/mopidy/c/plb", "pause"),
+            Message(f"{TOPIC_ROOT}/{zone}/spotify/control", "pause"),
+            Message(f"{TOPIC_ROOT}/{zone}/kodi/command/playbackstate", "pause"),
+        ]
+        for m in msgs:
+            mosq.publish(m.topic, m.payload)
+
 def on_message(mosq, obj, msg):
     print(msg.topic)
 
@@ -90,6 +103,7 @@ mqttc.message_callback_add(f"{TOPIC_ROOT}/+/spotify/status", on_spotify_status)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/airplay/status", on_airplay_status)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/kodi/status/notification/Player.OnPlay", on_kodi_play)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/kodi/status/notification/Player.OnResume", on_kodi_play)
+mqttc.message_callback_add(f"{TOPIC_ROOT}/+/bluetooth/status", on_bluetooth_status)
 mqttc.on_message = on_message
 mqttc.connect(MQTT_HOST, 1883, 60)
 mqttc.subscribe(f"{TOPIC_ROOT}/#", 0)
