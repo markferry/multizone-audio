@@ -205,7 +205,7 @@ live-install: debian $(DEBIAN_UNITS)
 #
 install-bluetooth:
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
-	install -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
+	install -D -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
 	install -m 0775 -t /usr/local/bin/ bluetooth/bluetooth-udev
 	install -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
 	rfkill unblock bluetooth
@@ -216,7 +216,7 @@ debian-%-install: iris.%.conf debian/nginx.override.conf install-bluetooth
 
 # osmc 2022.09+ already has some of these
 debian-install-bluetooth:
-	apt-get install -y --no-install-recommends bluetooth bluez-tools armv7-bluezalsa-osmc
+	apt-get install -y --no-install-recommends bluetooth bluez-tools armv7-bluezalsa-osmc rfkill
 
 dietpi-%-install: iris.%.conf dietpi/nginx.override.conf install-bluetooth
 	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
