@@ -145,9 +145,9 @@ source = pipe:///tmp/mopidy.{{name}}?name={{name}}&sampleformat=48000:16:2&codec
 
 {{#hosts}}
 # {{name}}
-source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac&controlscript=meta_mopidy.py
+source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac&controlscript=meta_mopidy.py&controlscriptparams=--mopidy-port={{mopidy.http_port}}
 source = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
-source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml&controlscript=meta_librespot-java.py
+source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml&controlscript=meta_librespot-java.py&controlscriptparams=--librespot-port={{spotify.api_port}}
 
 source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}{{#other_streams}}{{.}}/{{/other_streams}}?name={{Name}}
 
@@ -155,9 +155,9 @@ source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}-
 
 {{#party-zones}}
 # {{Name}}
-source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac&controlscript=meta_mopidy.py
+source = pipe:///tmp/mopidy.{{name}}?name=- {{name}} iris&sampleformat=48000:16:2&codec=flac&controlscript=meta_mopidy.py&controlscriptparams=--mopidy-port={{mopidy.http_port}}
 source = airplay:///shairport-sync?name=- {{name}} airplay&devicename={{Name}}&port={{airplay.port}}&params=--configfile={{path.config_root}}/shairport-sync.{{name}}.conf
-source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml&controlscript=meta_librespot-java.py
+source = process://{{path.java}}?name=- {{name}} spotify&log_stderr=true&sampleformat=44100:16:2&params=-jar%20{{spotify.jar}}%20--conf-file={{path.config_root}}/librespot.{{name}}.toml&controlscript=meta_librespot-java.py&controlscriptparams=--librespot-port={{spotify.api_port}}
 
 source = meta:///{{#announcer_streams}}{{.}}/{{/announcer_streams}}{{#streams}}- {{name}} {{.}}/{{/streams}}?name={{Name}}
 
