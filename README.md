@@ -53,11 +53,11 @@ snapcast-autoconfig manages the snapcast groups (including, for the benefit of I
 
 See [BUILDING](BUILDING.md) for notes on building some of these from sources.
 
-- Debian 10+ "Buster"
-- [snapserver v0.27+](https://github.com/badaix/snapcast)
+- Debian 12+ "Bookworm"
+- [snapserver v0.31+](https://github.com/badaix/snapcast)
 - [librespot-java](https://github.com/librespot-org/librespot-java)
     - java
-    - librespot-api-1.6.3.jar
+    - librespot-api-1.6.5.jar
     - default install dir is assumed to be `/opt/librespot`
 - [shairport-sync](https://github.com/mikebrady/shairport-sync)
   - 3.3.8-OpenSSL-Avahi-ALSA-stdout-pipe-soxr-metadata-mqtt-sysconfdir:/etc
