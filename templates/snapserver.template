@@ -170,7 +170,7 @@ doc_root = {{snapcast.snapweb_root}}{{^snapcast.snapweb_root}}/usr/share/snapser
 source = alsa://?name=Barn Chromecast{{#chromecast.device}}&device={{.}}{{/chromecast.device}}&idle_threshold=500&silence_threshold_percent=2.0
 
 {{#announcers}}
-source = pipe:///tmp/mopidy.{{name}}?name={{name}}&sampleformat=48000:16:2&codec=flac&controlscript=meta_mopidy.py
+source = pipe:///tmp/mopidy.{{name}}?name={{name}}&sampleformat=48000:16:2&codec=flac
 {{/announcers}}
 
 {{#hosts}}
