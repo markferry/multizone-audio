@@ -22,7 +22,7 @@
   },
   "spotify": {
     "event": "librespot-event.sh",
-    "jar": "/opt/librespot/librespot-api-1.6.3.jar"
+    "jar": "/opt/librespot/librespot-api.jar"
   },
   "hosts": [
     {
