@@ -203,6 +203,11 @@ live-install: debian $(DEBIAN_UNITS)
 
 # Player install
 #
+
+install-snapclient-deps:
+	# required by the snapclient debs
+	apt-get install -y --no-install-recommends libvorbisidec1
+
 install-bluetooth:
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
 	install -D -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
