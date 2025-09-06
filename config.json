@@ -13,11 +13,11 @@
     "device": "default:CARD=ICUSBAUDIO7D"
   },
   "mopidy": {
-    "host": "media",
+    "host": "media.home.whalebarn.com",
     "path": "/var/lib/mopidy/bin/mopidy"
   },
   "snapcast": {
-    "host": "media",
+    "host": "media.home.whalebarn.com",
     "snapweb_root": "/var/www/snapweb"
   },
   "spotify": {
@@ -83,7 +83,6 @@
         "port": 8080
       },
       "mopidy": {
-        "host": "media",
         "http_port": "6688",
         "mpd_port": "6608"
       },
