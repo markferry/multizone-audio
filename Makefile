@@ -77,14 +77,18 @@ ALL_SERVICES := \
 all: $(ALL_CONFIGS)
 
 # Find chevron or create a venv and install it
-SYS_CHEVRON := $(shell which chevron)
-ifeq (, $(SYS_CHEVRON))
-  CHEVRON := $(VENV)/bin/chevron
-$(CHEVRON): venv
+SYS_CHEVRON := $(shell which chevron 2>/dev/null || true)
+SYS_PYTHON := $(shell which python 2>/dev/null || true)
+ifeq ($(SYS_CHEVRON),)
+  PYTHON := $(VENV)/bin/python
+  $(PYTHON): venv
 else
-  CHEVRON := $(SYS_CHEVRON)
+  PYTHON := $(SYS_PYTHON)
 endif
-RENDER := render.py
+RENDER := $(PYTHON) render.py
+
+info:
+	@echo "Using python: $(PYTHON)"
 
 $(VENV):
 	$(info "No chevron in $(PATH). Installing in $(VENV)")
@@ -106,47 +110,47 @@ $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
 dietpi/%.service: templates/dietpi/%.service.template $(config) $(RENDER)
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 dev/%.service: templates/dev/%.service.template $(config) $(RENDER)
 	-@mkdir -p dev
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 dev/%.service: templates/%.service.template $(config) $(RENDER)
 	-@mkdir -p dev
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 debian/%.service: templates/debian/%.service.template $(config) $(RENDER)
 	-@mkdir -p debian
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 debian/%.service: templates/%.service.template $(config) $(RENDER)
 	-@mkdir -p debian
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 ../snapserver.conf: templates/snapserver.template $(config) $(RENDER)
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(config) $(RENDER)
-	python $(RENDER) -d $(config) $<  > $@
+	$(RENDER) -d $(config) $<  > $@
 
 mopidy.%.conf: $(config) templates/mopidy.template $(RENDER)
-	python $(RENDER) -z $* -d $< templates/mopidy.template > $@
+	$(RENDER) -z $* -d $< templates/mopidy.template > $@
 
 snapclient.%.conf: $(config) templates/snapclient.template $(RENDER)
-	python $(RENDER) -z $* -d $< templates/snapclient.template > $@
+	$(RENDER) -z $* -d $< templates/snapclient.template > $@
 
 shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
-	python $(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+	$(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
 
 librespot.%.toml: $(config) templates/librespot.template $(RENDER)
-	python $(RENDER) -z $* -d $< templates/librespot.template > $@
+	$(RENDER) -z $* -d $< templates/librespot.template > $@
 
 iris.%.conf: $(config) templates/iris.template $(RENDER)
-	python $(RENDER) -z $* -d $< templates/iris.template > $@
+	$(RENDER) -z $* -d $< templates/iris.template > $@
 
 home-assistant.%.yaml: $(config) templates/home-assistant.yaml.template
-	python $(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
+	$(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
 
 
 snapserver: ../snapserver.conf
