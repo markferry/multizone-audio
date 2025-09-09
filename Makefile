@@ -1,9 +1,13 @@
 config ?= config.json
 
 SHELL := /bin/bash   # for curly-brace expansion
+
+MUSIC_METADATA_DIR := /mnt/media/music/metadata
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
 LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
+DEV_GO_LIBRESPOT_CONFIG_DIR := ~/.cache/go-librespot
+LIVE_GO_LIBRESPOT_CONFIG_DIR := $(MUSIC_METADATA_DIR)/go-librespot
 LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
 
@@ -69,6 +73,12 @@ DEV_CONFIGS := \
 LIVE_CONFIGS := \
 	debian/mopidy@.service \
 	debian/multizone-audio-control.service \
+
+DEV_INSTALL_CONFIGS := \
+	$(patsubst go-librespot.%.yaml, $(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
+
+LIVE_INSTALL_CONFIGS := \
+	$(patsubst go-librespot.%.yaml, $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
 
 ALL_SERVICES := \
 	$(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS)) \
@@ -184,6 +194,15 @@ stop: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 	systemctl $(SYSTEMCTL_USER) stop $(EXP_SERVICES)@$(HOST)
 
+# install config files in the appropriate place
+
+# FIXME: https://github.com/devgianlu/go-librespot/issues/201
+$(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
+	install -D $^ $(DEV_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
+
+$(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
+	install -D $^ $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
+
 # install the systemd unit files in the appropriate place
 
 $(DEV_SYSTEMD_CONFIG_DIR)/%.service: dev/%.service
@@ -200,12 +219,12 @@ $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
 
 dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
 
-dev-install: dev $(DEV_UNITS)
+dev-install: dev $(DEV_UNITS) $(DEV_INSTALL_CONFIGS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
 debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
-live-install: debian $(DEBIAN_UNITS)
+live-install: debian $(DEBIAN_UNITS) $(LIVE_INSTALL_CONFIGS)
 	systemctl $(SYSTEMCTL_USER) daemon-reload
 
 # Player install
