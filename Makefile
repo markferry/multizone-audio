@@ -43,7 +43,7 @@ DEBIAN_UNITS := \
 ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
 ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
 ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
-ALL_SPOTIFY := $(patsubst %, librespot.%.toml, $(ALL_ZONES))
+ALL_SPOTIFY := $(patsubst %, go-librespot.%.yaml, $(ALL_ZONES))
 ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
 ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_ZONES))
 ALL_HOME_ASSISTANT_INSTALL := \
@@ -145,6 +145,9 @@ shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
 
 librespot.%.toml: $(config) templates/librespot.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/librespot.template > $@
+
+go-librespot.%.yaml: $(config) templates/go-librespot.yaml $(RENDER)
+	$(RENDER) -z $* -d $< templates/go-librespot.yaml > $@
 
 iris.%.conf: $(config) templates/iris.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/iris.template > $@

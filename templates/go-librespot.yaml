@@ -1,0 +1,28 @@
+device_name: "{{zone.Name}}"
+device_type: "speaker"
+
+audio_backend: "pipe"
+audio_output_pipe: "/dev/stdout"
+audio_output_pipe_format: "s16le"
+
+bitrate: 160
+
+volume_steps: 64
+initial_volume: 32
+
+normalisation_disabled: false
+normalisation_use_album_gain: true
+normalisation_pregain: 3.0
+
+server:
+  enabled: true
+  address: "0.0.0.0"
+  port: {{zone.spotify.api_port}}
+
+zeroconf_enabled: true
+zeroconf_port: {{zone.spotify.zeroconf}}
+
+credentials:
+  type: zeroconf
+  zeroconf:
+    persist_credentials: true
