@@ -201,7 +201,7 @@ $(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
 	install -D $^ $(DEV_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
 
 $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
-	install -D $^ $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
+	install -o snapserver -D $^ $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
 
 # install the systemd unit files in the appropriate place
 
