@@ -1,0 +1,148 @@
+{
+  "path": {
+    "config_root": "/etc/multizone-audio",
+    "media_root": "/mnt/media",
+    "music_metadata": "music/metadata",
+    "java": "/usr/bin/java"
+  },
+  "mqtt": {
+    "host": "mqtt-server.local"
+  },
+  "python": "python3",
+  "chromecast": {
+    "name": "Google Chromecast",
+    "device": "default:CARD=ICUSBAUDIO7D"
+  },
+  "mopidy": {
+    "host": "media-server.local",
+    "path": "/var/lib/mopidy/bin/mopidy"
+  },
+  "snapcast": {
+    "host": "media-server.local",
+    "snapweb_root": "/var/www/snapweb"
+  },
+  "spotify": {
+    "event": "librespot-event.sh",
+    "go": "/opt/librespot/go-librespot",
+    "jar": "/opt/librespot/librespot-api.jar"
+  },
+  "hosts": [
+    {
+      "name": "room1",
+      "Name": "Room1",
+      "airplay": {
+        "port": "5106"
+      },
+      "kodi": {
+        "port": 8080
+      },
+      "mopidy": {
+        "http_port": "6686",
+        "mpd_port": "6606"
+      },
+      "spotify": {
+        "api_port": "24806",
+        "crossfade_ms": "0",
+        "zeroconf": "39806"
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": "--mixer=hardware",
+        "volume": 76
+      },
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "room-with-announcer",
+      "name_": "room_with_announcer",
+      "Name": "Room with Announcer",
+      "airplay": {
+        "port": "5107"
+      },
+      "mopidy": {
+        "http_port": "6687",
+        "mpd_port": "6607"
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 50
+      },
+      "spotify": {
+        "api_port": "24807",
+        "crossfade_ms": "0",
+        "zeroconf": "39807"
+      },
+      "announcer_streams": ["announcer"],
+      "streams": ["spotify", "airplay", "iris"]
+    },
+    {
+      "name": "room-with-extra-streams",
+      "name_": "room_with_extra_stream",
+      "Name": "Room with Extra Streams",
+      "airplay": {
+        "port": "5111"
+      },
+      "mopidy": {
+        "http_port": "6691",
+        "mpd_port": "6611"
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": "-s Device --mixer=hardware:Speaker",
+        "volume": 65
+      },
+      "spotify": {
+        "api_port": "24811",
+        "crossfade_ms": "0",
+        "zeroconf": "39811"
+      },
+      "streams": ["spotify", "airplay", "iris"],
+      "other_streams": ["Google Chromecast"]
+    }
+  ],
+  "announcers": [
+    {
+      "name": "announcer",
+      "Name": "Announcer",
+      "mopidy": {
+        "http_port": "6680",
+        "mpd_port": "6600",
+        "mpd_only": true
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": ""
+      },
+      "dev": false
+    }
+  ],
+  "party-zones": [
+    {
+      "name": "everywhere",
+      "Name": "Everywhere",
+      "airplay": {
+        "port": "5101"
+      },
+      "mopidy": {
+        "http_port": "6681",
+        "mpd_port": "6601"
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": ""
+      },
+      "spotify": {
+        "api_port": "24801",
+        "crossfade_ms": "2000",
+        "zeroconf": "39801"
+      },
+      "streams": ["spotify", "airplay", "iris"],
+      "clients": [
+        "room1",
+        "room-with-announcer",
+        "room-with-extra-streams"
+      ]
+    }
+  ]
+}
