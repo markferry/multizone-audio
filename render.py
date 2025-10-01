@@ -42,7 +42,11 @@ def main():
         d = json.load(j)
         if args.zone:
             all_zones = d["hosts"] + d["announcers"] + d["party-zones"]
-            d["zone"] = next(z for z in all_zones if z["name"] == args.zone)
+            try:
+                d["zone"] = next(z for z in all_zones if z["name"] == args.zone)
+            except StopIteration:
+                print(f"No zone '{args.zone}' in config '{args.data}'", file=sys.stderr)
+                sys.exit(1)
         with open(args.template, "r") as t:
             print(chevron.render(t, d))
 
