@@ -1,6 +1,16 @@
-config ?= config.json
-config_in := $(config)
+#
+# Makefile for multizone-audio configuration generation and installation.
+#
+# Usage:
+# 	make [config_in=config.json] [output_dir=build] [install_dir=/etc/multizone-config]
+#
+#
 
+config_in ?= config.json
+output_dir ?= build
+install_dir ?= /etc/multizone-audio
+
+CONFIG := $(output_dir)/config.out.json
 SHELL := /bin/bash   # for curly-brace expansion
 
 MUSIC_METADATA_DIR := /mnt/media/music/metadata
@@ -11,9 +21,13 @@ DEV_GO_LIBRESPOT_CONFIG_DIR := ~/.cache/go-librespot
 LIVE_GO_LIBRESPOT_CONFIG_DIR := $(MUSIC_METADATA_DIR)/go-librespot
 LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
 LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
+SNAPSERVER_CONF := /etc/snapserver.conf
 
 VENV := .venv
-SYSTEMCTL_USER ?=
+
+ifneq ($(shell id -u),0)
+	SYSTEMCTL_USER = --user
+endif
 
 # query config.in for zone names
 ALL_HOSTS := $(shell python -c 'import json,sys;j=json.load(sys.stdin);print(" ".join([z["name"] for z in j["hosts"]]))' < $(config_in))
@@ -35,19 +49,17 @@ DEBIAN_UNITS := \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/mopidy@.service \
 	$(LIVE_SYSTEMD_CONFIG_DIR)/multizone-audio-control.service \
 
-ALL_MOPIDY := $(patsubst %, mopidy.%.conf, $(ALL_ZONES))
-ALL_AIRPLAY := $(patsubst %, shairport-sync.%.conf, $(ALL_HOSTS))
-ALL_SNAPCLIENTS := $(patsubst %, snapclient.%.conf, $(ALL_HOSTS))
-ALL_SPOTIFY := $(patsubst %, go-librespot.%.yaml, $(ALL_ZONES))
-ALL_NGINX := $(patsubst %, iris.%.conf, $(ALL_HOSTS))
-ALL_HOME_ASSISTANT := $(patsubst %, home-assistant.%.yaml, $(ALL_ZONES))
+ALL_MOPIDY := $(patsubst %, $(output_dir)/mopidy.%.conf, $(ALL_ZONES))
+ALL_AIRPLAY := $(patsubst %, $(output_dir)/shairport-sync.%.conf, $(ALL_HOSTS))
+ALL_SNAPCLIENTS := $(patsubst %, $(output_dir)/snapclient.%.conf, $(ALL_HOSTS))
+ALL_SPOTIFY := $(patsubst %, $(output_dir)/go-librespot.%.yaml, $(ALL_ZONES))
+ALL_NGINX := $(patsubst %, $(output_dir)/iris.%.conf, $(ALL_HOSTS))
+ALL_HOME_ASSISTANT := $(patsubst %, $(output_dir)/home-assistant.%.yaml, $(ALL_ZONES))
 ALL_HOME_ASSISTANT_INSTALL := \
 	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/%/media.yaml, $(ALL_HOSTS)) \
 	$(patsubst %, $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml, $(ALL_LOGICAL))
 
-ALL_CONFIGS := \
-	../snapserver.conf \
-	snapcast-autoconfig.yaml \
+ALL_MZ_CONFIGS := \
 	$(ALL_MOPIDY) \
 	$(ALL_AIRPLAY) \
 	$(ALL_NGINX) \
@@ -55,27 +67,40 @@ ALL_CONFIGS := \
 	$(ALL_SPOTIFY) \
 	$(ALL_SNAPCLIENTS) \
 
+ALL_CONFIGS := \
+	$(CONFIG) \
+	$(output_dir)/snapserver.conf \
+	$(output_dir)/snapcast-autoconfig.yaml \
+	$(ALL_MZ_CONFIGS) \
+
 DEV_CONFIGS := \
-	dev/snapserver.service \
-	dev/snapclient@.service \
-	dev/mopidy@.service \
-	dev/multizone-audio-control.service \
+	$(output_dir)/dev/snapserver.service \
+	$(output_dir)/dev/snapclient@.service \
+	$(output_dir)/dev/mopidy@.service \
+	$(output_dir)/dev/multizone-audio-control.service \
 
 LIVE_CONFIGS := \
-	debian/mopidy@.service \
-	debian/multizone-audio-control.service \
+	$(output_dir)/debian/mopidy@.service \
+	$(output_dir)/debian/multizone-audio-control.service \
 
 DEV_INSTALL_CONFIGS := \
-	$(patsubst go-librespot.%.yaml, $(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
+	$(patsubst $(output_dir)/go-librespot.%.yaml, $(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
 
 LIVE_INSTALL_CONFIGS := \
-	$(patsubst go-librespot.%.yaml, $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
+	$(patsubst $(output_dir)/go-librespot.%.yaml, $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml, $(ALL_SPOTIFY))
 
 ALL_SERVICES := \
 	$(patsubst %, ${EXP_SERVICES}@%, $(ALL_HOSTS)) \
 	$(patsubst %, mopidy@%, $(ALL_LOGICAL))
 
 all: $(ALL_CONFIGS)
+
+# Config, substituting specific envvars
+$(CONFIG): $(config_in)
+	-@mkdir -p $(output_dir)
+	set -a; . .env 2>/dev/null; install_dir=$(install_dir) output_dir=$(output_dir) envsubst < $< > $@
+
+config: $(CONFIG)
 
 # Find chevron or create a venv and install it
 SYS_CHEVRON := $(shell which chevron 2>/dev/null || true)
@@ -112,63 +137,66 @@ $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
-dietpi/%.service: templates/dietpi/%.service.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dietpi/%.service: templates/dietpi/%.service.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-dev/%.service: templates/dev/%.service.template $(config) $(RENDER)
-	-@mkdir -p dev
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dev/%.service: templates/dev/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/dev
+	$(RENDER) -d $(CONFIG) $< > $@
 
-dev/%.service: templates/%.service.template $(config) $(RENDER)
-	-@mkdir -p dev
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/dev/%.service: templates/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/dev
+	$(RENDER) -d $(CONFIG) $< > $@
 
-debian/%.service: templates/debian/%.service.template $(config) $(RENDER)
-	-@mkdir -p debian
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/debian/%.service: templates/debian/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/debian
+	$(RENDER) -d $(CONFIG) $< > $@
 
-debian/%.service: templates/%.service.template $(config) $(RENDER)
-	-@mkdir -p debian
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/debian/%.service: templates/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/debian
+	$(RENDER) -d $(CONFIG) $< > $@
 
-../snapserver.conf: templates/snapserver.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/snapserver.conf: templates/snapserver.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(config) $(RENDER)
-	$(RENDER) -d $(config) $<  > $@
+$(output_dir)/snapcast-autoconfig.yaml: templates/snapcast-autoconfig.yaml.template $(CONFIG) $(RENDER)
+	$(RENDER) -d $(CONFIG) $< > $@
 
-mopidy.%.conf: $(config) templates/mopidy.template $(RENDER)
+$(output_dir)/mopidy.%.conf: $(CONFIG) templates/mopidy.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/mopidy.template > $@
 
-snapclient.%.conf: $(config) templates/snapclient.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/snapclient.template > $@
+$(output_dir)/snapclient.%.conf: $(CONFIG) templates/snapclient.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/snapclient.template> $@
 
-shairport-sync.%.conf: $(config) templates/shairport-sync.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@ 
+$(output_dir)/shairport-sync.%.conf: $(CONFIG) templates/shairport-sync.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/shairport-sync.template | grep -v '^//\|^$$' > $@
 
-librespot.%.toml: $(config) templates/librespot.template $(RENDER)
+$(output_dir)/librespot.%.toml: $(CONFIG) templates/librespot.template $(RENDER)
 	$(RENDER) -z $* -d $< templates/librespot.template > $@
 
-go-librespot.%.yaml: $(config) templates/go-librespot.yaml $(RENDER)
+$(output_dir)/go-librespot.%.yaml: $(CONFIG) templates/go-librespot.yaml $(RENDER)
 	$(RENDER) -z $* -d $< templates/go-librespot.yaml > $@
 
-iris.%.conf: $(config) templates/iris.template $(RENDER)
-	$(RENDER) -z $* -d $< templates/iris.template > $@
+$(output_dir)/iris.%.conf: $(CONFIG) templates/iris.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/iris.template> $@
 
-home-assistant.%.yaml: $(config) templates/home-assistant.yaml.template
+$(output_dir)/home-assistant.%.yaml: $(CONFIG) templates/home-assistant.yaml.template
 	$(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
 
 
-snapserver: ../snapserver.conf
+snapserver: $(output_dir)/snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
 
 controller: controller/multizone-control.py
 	systemctl $(SYSTEMCTL_USER) restart multizone-audio-control
 
-restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
+reload:
+	systemctl $(SYSTEMCTL_USER) daemon-reload
+
+restart: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS) reload
 	systemctl $(SYSTEMCTL_USER) restart $(ALL_SERVICES)
 
-restart-host:
+restart-host: reload
 	systemctl $(SYSTEMCTL_USER) restart $(EXP_SERVICES)@$(HOST)
 
 start: restart snapserver controller
@@ -190,21 +218,21 @@ stop-host: $(ALL_CONFIGS) $(ALL_SNAPCLIENTS)
 # install config files in the appropriate place
 
 # FIXME: https://github.com/devgianlu/go-librespot/issues/201
-$(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
+$(DEV_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: $(output_dir)/go-librespot.%.yaml
 	install -D $^ $(DEV_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
 
-$(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: go-librespot.%.yaml
+$(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: $(output_dir)/go-librespot.%.yaml
 	install -o snapserver -D $^ $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/$*/config.yaml
 
 # install the systemd unit files in the appropriate place
 
-$(DEV_SYSTEMD_CONFIG_DIR)/%.service: dev/%.service
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
-$(DEV_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
+$(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
 	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
-$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: debian/%.service
+$(LIVE_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/debian/%.service
 	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
 
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
@@ -213,12 +241,14 @@ $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
 dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
 
 dev-install: dev $(DEV_UNITS) $(DEV_INSTALL_CONFIGS)
-	systemctl $(SYSTEMCTL_USER) daemon-reload
+	install -D -t $(install_dir) $(ALL_MZ_CONFIGS)
+	install $(output_dir)/snapserver.conf $(install_dir)
 
 debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
-live-install: debian $(DEBIAN_UNITS) $(LIVE_INSTALL_CONFIGS)
-	systemctl $(SYSTEMCTL_USER) daemon-reload
+live-install: debian $(DEBIAN_UNITS) $(DEV_INSTALL_CONFIGS)
+	install -t $(install_dir) $(ALL_MZ_CONFIGS)
+	install -T $(output_dir)/snapserver.conf $(SNAPSERVER_CONF)
 
 # Player install
 #
@@ -251,7 +281,7 @@ dietpi-install-bluetooth:
 	apt-get install -y --no-install-recommends rfkill bluetooth bluez-tools bluez-alsa-utils
 
 clean:
-	-rm $(ALL_CONFIGS)
+	-rm $(ALL_CONFIGS) $(LIVE_CONFIGS) $(DEV_CONFIGS)
 
 # Documentation
 %.html: %.md Makefile
