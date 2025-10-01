@@ -1,3 +1,11 @@
+#
+# Makefile for multizone-audio configuration generation and installation.
+#
+# Usage:
+# 	make [config_in=config.json] [output_dir=build] [install_dir=/etc/multizone-config]
+#
+#
+
 config_in ?= config.json
 output_dir ?= build
 install_dir ?= /etc/multizone-audio
