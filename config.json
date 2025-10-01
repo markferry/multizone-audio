@@ -10,6 +10,7 @@
   },
   "python": "python3",
   "chromecast": {
+    "name": "Barn Chromecast",
     "device": "default:CARD=ICUSBAUDIO7D"
   },
   "mopidy": {
