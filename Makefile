@@ -1,4 +1,5 @@
 config ?= config.json
+config_in := $(config)
 
 SHELL := /bin/bash   # for curly-brace expansion
 
@@ -14,19 +15,9 @@ LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
 VENV := .venv
 SYSTEMCTL_USER ?=
 
-ALL_HOSTS := \
-	study \
-	kitchen \
-	library \
-	lounge \
-	ballroom \
-	ballroom-patio \
-	outside \
-	bedroom-mark \
-
-ALL_LOGICAL := \
-	announcer \
-	everywhere \
+# query config.in for zone names
+ALL_HOSTS := $(shell python -c 'import json,sys;j=json.load(sys.stdin);print(" ".join([z["name"] for z in j["hosts"]]))' < $(config_in))
+ALL_LOGICAL := $(shell python -c 'import json,sys;j=json.load(sys.stdin);print(" ".join([z["name"] for z in j["announcers"] + j["party-zones"]]))' < $(config_in))
 
 ALL_ZONES := \
 	$(ALL_HOSTS) \
@@ -99,6 +90,8 @@ RENDER := $(PYTHON) render.py
 
 info:
 	@echo "Using python: $(PYTHON)"
+	@echo "host zones: $(ALL_HOSTS)"
+	@echo "logical zones: $(ALL_LOGICAL)"
 
 $(VENV):
 	$(info "No chevron in $(PATH). Installing in $(VENV)")
