@@ -1,5 +1,6 @@
 .env
 .venv
+config.json
 systemd/*.service
 snapcast-autoconfig.yaml
 ./*.conf
