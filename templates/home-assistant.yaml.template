@@ -1,11 +1,19 @@
 {{#zone}}
 media_player:
-  - platform: mpd
-    {{! use slugified name if available}}
-    name: {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mpd
     {{! use localhost for dev}}
-    host: {{#dev}}localhost{{/dev}}{{^dev}}{{mopidy.host}}{{/dev}}
+  - host: {{#dev}}localhost{{/dev}}{{^dev}}{{mopidy.host}}{{/dev}}
+    {{! use mopidy custom extension if enabled}}
+    {{#home_assistant.use_mopidy}}
+    {{! use slugified name if available}}
+    name: {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mopidy
+    port: {{mopidy.http_port}}
+    platform: mopidy
+    {{/home_assistant.use_mopidy}}
+    {{^home_assistant.use_mopidy}}
+    name: {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mpd
     port: {{mopidy.mpd_port}}
+    platform: mpd
+    {{/home_assistant.use_mopidy}}
 {{#kodi}}
 
   - platform: kodi
@@ -17,7 +25,12 @@ media_player:
   - platform: group
     name: {{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_multizone_audio
     entities:
+      {{#home_assistant.use_mopidy}}
+      - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mopidy
+      {{/home_assistant.use_mopidy}}
+      {{^home_assistant.use_mopidy}}
       - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_mpd
+      {{/home_assistant.use_mopidy}}
       {{#kodi}}
       - media_player.{{#name_}}{{name_}}{{/name_}}{{^name_}}{{name}}{{/name_}}_kodi
       {{/kodi}}
