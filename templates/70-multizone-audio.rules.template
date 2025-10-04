@@ -1,0 +1,4 @@
+# multizone-audio: give soundcards deterministic names
+{{#zone.udev.soundcard}}
+ACTION=="add", SUBSYSTEM=="sound", DEVPATH=="{{path}}/card?", ATTR{id}="{{name}}"
+{{/zone.udev.soundcard}}
