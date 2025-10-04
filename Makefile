@@ -264,16 +264,16 @@ install-bluetooth:
 	install -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
 	rfkill unblock bluetooth
 
-debian-%-install: iris.%.conf debian/nginx.override.conf install-bluetooth
-	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
+debian-%-install: $(output_dir)/iris.%.conf debian/nginx.override.conf install-bluetooth
+	install -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
 	install -T -D debian/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 # osmc 2022.09+ already has some of these
 debian-install-bluetooth:
 	apt-get install -y --no-install-recommends rfkill bluetooth bluez-tools armv7-bluezalsa-osmc
 
-dietpi-%-install: iris.%.conf dietpi/nginx.override.conf install-bluetooth
-	install -t $(LIVE_NGINX_CONFIG_DIR) iris.$*.conf
+dietpi-%-install: $(output_dir)/iris.%.conf dietpi/nginx.override.conf install-bluetooth
+	install -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
 	install -T -D dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 # bluez-alsa is in: Raspbian 10 (but not installable) and Raspbian 12+
