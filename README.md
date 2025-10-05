@@ -18,6 +18,7 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
 - [ ] no snapcast controls visible to end-users(!)
 - [x] eliminate unnecessary software volume controls
 - [x] replaygain support
+- [x] supports multiple audio outputs per player
 
 # Architecture
 
