@@ -138,6 +138,7 @@ $(HOME_ASSISTANT_CONFIG)/packages/multizone-audio-%.yaml: home-assistant.%.yaml
 ha-install: $(ALL_HOME_ASSISTANT_INSTALL)
 
 $(output_dir)/dietpi/%.service: templates/dietpi/%.service.template $(CONFIG) $(RENDER)
+	-@mkdir -p $(output_dir)/dietpi
 	$(RENDER) -d $(CONFIG) $< > $@
 
 $(output_dir)/dev/%.service: templates/dev/%.service.template $(CONFIG) $(RENDER)
@@ -227,16 +228,16 @@ $(LIVE_GO_LIBRESPOT_CONFIG_DIR)/%/config.yaml: $(output_dir)/go-librespot.%.yaml
 # install the systemd unit files in the appropriate place
 
 $(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
-	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
+	install -D -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
 $(DEV_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/dev/%.service
-	install -t $(DEV_SYSTEMD_CONFIG_DIR) $^
+	install -D -t $(DEV_SYSTEMD_CONFIG_DIR) $^
 
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: $(output_dir)/debian/%.service
-	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
+	install -D -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
 
 $(LIVE_SYSTEMD_CONFIG_DIR)/%.service: controller/%.service
-	install -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
+	install -D -t $(LIVE_SYSTEMD_CONFIG_DIR) $^
 
 dev: $(ALL_CONFIGS) $(DEV_CONFIGS)
 
@@ -246,8 +247,8 @@ dev-install: dev $(DEV_UNITS) $(DEV_INSTALL_CONFIGS)
 
 debian: $(ALL_CONFIGS) $(LIVE_CONFIGS)
 
-live-install: debian $(DEBIAN_UNITS) $(DEV_INSTALL_CONFIGS)
-	install -t $(install_dir) $(ALL_MZ_CONFIGS)
+live-install: debian $(DEBIAN_UNITS) $(LIVE_INSTALL_CONFIGS)
+	install -D -t $(install_dir) $(ALL_MZ_CONFIGS)
 	install -T $(output_dir)/snapserver.conf $(SNAPSERVER_CONF)
 
 # Player install
@@ -258,23 +259,23 @@ install-snapclient-deps:
 	apt-get install -y --no-install-recommends libvorbisidec1
 
 install-bluetooth:
-	install -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
+	install -D -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
 	install -D -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
-	install -m 0775 -t /usr/local/bin/ bluetooth/bluetooth-udev
-	install -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
+	install -m 0775 -D -t /usr/local/bin/ bluetooth/bluetooth-udev
+	install -D -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
 	rfkill unblock bluetooth
 
 debian-%-install: $(output_dir)/iris.%.conf debian/nginx.override.conf install-bluetooth
-	install -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
-	install -T -D debian/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
+	install -D -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
+	install -D -T debian/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 # osmc 2022.09+ already has some of these
 debian-install-bluetooth:
 	apt-get install -y --no-install-recommends rfkill bluetooth bluez-tools armv7-bluezalsa-osmc
 
 dietpi-%-install: $(output_dir)/iris.%.conf dietpi/nginx.override.conf install-bluetooth
-	install -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
-	install -T -D dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
+	install -D -t $(LIVE_NGINX_CONFIG_DIR) $(output_dir)/iris.$*.conf
+	install -D -T dietpi/nginx.override.conf $(LIVE_SYSTEMD_CONFIG_DIR)/nginx.service.d/override.conf
 
 # bluez-alsa is in: Raspbian 10 (but not installable) and Raspbian 12+
 dietpi-install-bluetooth:
