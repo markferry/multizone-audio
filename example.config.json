@@ -1,6 +1,6 @@
 {
   "path": {
-    "config_root": "/etc/multizone-audio",
+    "config_root": "$install_dir",
     "media_root": "/mnt/media",
     "music_metadata": "music/metadata",
     "java": "/usr/bin/java"
