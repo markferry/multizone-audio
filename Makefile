@@ -8,20 +8,22 @@
 
 config_in ?= config.json
 output_dir ?= build
-install_dir ?= /etc/multizone-audio
+install_prefix ?=
+
+install_dir ?= $(install_prefix)/etc/multizone-audio
 
 CONFIG := $(output_dir)/config.out.json
 SHELL := /bin/bash   # for curly-brace expansion
 
-MUSIC_METADATA_DIR := /mnt/media/music/metadata
+MUSIC_METADATA_DIR := $(install_prefix)/mnt/media/music/metadata
 HOME_ASSISTANT_CONFIG := ~/network/home-assistant/config
 DEV_SYSTEMD_CONFIG_DIR := ~/.config/systemd/user
-LIVE_SYSTEMD_CONFIG_DIR := /etc/systemd/system
+LIVE_SYSTEMD_CONFIG_DIR := $(install_prefix)/etc/systemd/system
 DEV_GO_LIBRESPOT_CONFIG_DIR := ~/.cache/go-librespot
 LIVE_GO_LIBRESPOT_CONFIG_DIR := $(MUSIC_METADATA_DIR)/go-librespot
-LIVE_NGINX_CONFIG_DIR := /etc/nginx/sites-available
-LIVE_BLUETOOTH_CONFIG_DIR := /etc/bluetooth
-SNAPSERVER_CONF := /etc/snapserver.conf
+LIVE_NGINX_CONFIG_DIR := $(install_prefix)/etc/nginx/sites-available
+LIVE_BLUETOOTH_CONFIG_DIR := $(install_prefix)/etc/bluetooth
+SNAPSERVER_CONF := $(install_prefix)/etc/snapserver.conf
 
 VENV := .venv
 
@@ -261,8 +263,8 @@ install-snapclient-deps:
 install-bluetooth:
 	install -D -t $(LIVE_SYSTEMD_CONFIG_DIR) bluetooth/bt-agent@.service
 	install -D -t $(LIVE_BLUETOOTH_CONFIG_DIR) bluetooth/main.conf
-	install -m 0775 -D -t /usr/local/bin/ bluetooth/bluetooth-udev
-	install -D -t /etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
+	install -m 0775 -D -t $(install_prefix)/usr/local/bin/ bluetooth/bluetooth-udev
+	install -D -t $(install_prefix)/etc/udev/rules.d/ bluetooth/99-bluetooth-udev.rules
 	rfkill unblock bluetooth
 
 debian-%-install: $(output_dir)/iris.%.conf debian/nginx.override.conf install-bluetooth
