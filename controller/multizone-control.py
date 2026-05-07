@@ -29,12 +29,14 @@ Message = namedtuple("Message", "topic payload")
 MQTT_HOST = "pixie3"
 TOPIC_ROOT = "media"
 
+
 def parse_zone(topic):
-    return topic.split('/')[1]
+    return topic.split("/")[1]
+
 
 def on_mopidy_status(mosq, obj, msg):
     print("mopidy: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    if msg.payload == b'playing':
+    if msg.payload == b"playing":
         zone = parse_zone(msg.topic)
         msgs = [
             Message(f"{TOPIC_ROOT}/{zone}/airplay/remote", "pause"),
@@ -56,9 +58,10 @@ def on_spotify_status(mosq, obj, msg):
     for m in msgs:
         mosq.publish(m.topic, m.payload)
 
+
 def on_airplay_status(mosq, obj, msg):
     print("airplay: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    if msg.payload == b'playing':
+    if msg.payload == b"playing":
         zone = parse_zone(msg.topic)
         msgs = [
             Message(f"{TOPIC_ROOT}/{zone}/mopidy/c/plb", "pause"),
@@ -67,6 +70,7 @@ def on_airplay_status(mosq, obj, msg):
         ]
         for m in msgs:
             mosq.publish(m.topic, m.payload)
+
 
 def on_kodi_play(mosq, obj, msg):
     print("kodi: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
@@ -79,6 +83,26 @@ def on_kodi_play(mosq, obj, msg):
     for m in msgs:
         mosq.publish(m.topic, m.payload)
 
+
+def on_jellyfin_status(mosq, obj, msg):
+    print("jellyfin: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    zone = parse_zone(msg.topic)
+    try:
+        json_payload = json.loads(msg.payload.decode("utf-8"))
+        if json_payload["notification_type"] == "PlaybackStart":
+            msgs = [
+                Message(f"{TOPIC_ROOT}/{zone}/mopidy/c/plb", "pause"),
+                Message(f"{TOPIC_ROOT}/{zone}/spotify/control", "pause"),
+                Message(f"{TOPIC_ROOT}/{zone}/airplay/remote", "pause"),
+                Message(f"{TOPIC_ROOT}/{zone}/kodi/command/playbackstate", "pause"),
+            ]
+
+            for m in msgs:
+                mosq.publish(m.topic, m.payload)
+    except json.decoder.JSONDecodeError:
+        print("Failed to decode Jellyfin JSON payload: " + msg.payload.decode("utf-8"))
+
+
 def on_message(mosq, obj, msg):
     print(msg.topic)
 
@@ -90,6 +114,8 @@ mqttc.message_callback_add(f"{TOPIC_ROOT}/+/spotify/status", on_spotify_status)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/airplay/status", on_airplay_status)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/kodi/status/notification/Player.OnPlay", on_kodi_play)
 mqttc.message_callback_add(f"{TOPIC_ROOT}/+/kodi/status/notification/Player.OnResume", on_kodi_play)
+mqttc.message_callback_add(f"{TOPIC_ROOT}/+/jellyfin/playbackstate", on_jellyfin_status)
+
 mqttc.on_message = on_message
 mqttc.connect(MQTT_HOST, 1883, 60)
 mqttc.subscribe(f"{TOPIC_ROOT}/#", 0)
