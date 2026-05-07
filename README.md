@@ -8,9 +8,11 @@ A **config generator** for a multizone audio system based on snapcast, Mopidy an
     - [ ] player controls
   - [x] Airplay
   - [x] Mopidy/MPD
-  - [x] Kodi
   - [x] Bluetooth
     - [x] automatically accept new connections
+- [x] pause audio when playing other media
+  - [x] Kodi
+  - [x] Jellyfin
 - [x] seamless switching between protocols in each zone
 - [x] high-priority announcement streams (alarms, doorbells)
 - [ ] invisible, automatic party reconfiguration
@@ -117,6 +119,8 @@ which implements control of concurrent playback streams via
   - install by manually extracting the zip in `~/.kodi/addons/` on the client
   - Kodi v20 "Nexus" requires [kodi2mqtt v0.22](https://github.com/void-spark/kodi2mqtt/releases/tag/v0.22)
   - Kodi v19 "Matrix" requires kodi2mqtt v0.21 (or use the [python2.7 patch by tspspi](https://github.com/tspspi/kodi2mqtt/commit/e7df9fa70284f0e905728c33c4b243bec92073e8))
+- Jellyfin v10+
+  - [Webhook plugin](https://github.com/jellyfin/jellyfin-plugin-webhook) v12+
 
 ## Controller
 
