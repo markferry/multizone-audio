@@ -4,8 +4,10 @@ config_dir = /etc/mopidy
 data_dir = {{path.media_root}}/{{path.music_metadata}}/mopidy/lib
 
 [logging]
-config_file = /etc/mopidy/logging.conf
 debug_file = /var/log/mopidy/mopidy-debug.{{zone.name}}.log
+
+[loglevels]
+mopidy_mpd = warning
 
 [audio]
 output = audioresample ! audioconvert ! rgvolume ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/tmp/mopidy.{{zone.name}}
