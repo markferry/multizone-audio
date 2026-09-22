@@ -99,6 +99,35 @@
       },
       "streams": ["spotify", "airplay", "iris"],
       "other_streams": ["Google Chromecast"]
+    },
+    {
+      "name": "room-with-static-soundcard-name",
+      "name_": "room_with_static_soundcard_name",
+      "Name": "Room with Static Soundcard Name",
+      "airplay": {
+        "port": "5112"
+      },
+      "mopidy": {
+        "http_port": "6692",
+        "mpd_port": "6612"
+      },
+      "snapcast": {
+        "latency": 0,
+        "opts": "-s MyCard --mixer=hardware",
+        "volume": 65
+      },
+      "spotify": {
+        "api_port": "24812",
+        "crossfade_ms": "0",
+        "zeroconf": "39812"
+      },
+      "udev": {
+        "soundcard": {
+            "name": "MyCard",
+            "path": "/devices/platform/soc/3f980000.usb/usb1/1-1/1-1.2/1-1.2:1.0/sound"
+        }
+      },
+      "streams": ["spotify", "airplay", "iris"]
     }
   ],
   "announcers": [

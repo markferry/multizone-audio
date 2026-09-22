@@ -186,6 +186,9 @@ $(output_dir)/iris.%.conf: $(CONFIG) templates/iris.template $(RENDER)
 $(output_dir)/home-assistant.%.yaml: $(CONFIG) templates/home-assistant.yaml.template
 	$(RENDER) -z $* -d $< templates/home-assistant.yaml.template > $@
 
+$(output_dir)/70-multizone-audio.%.rules: $(CONFIG) templates/70-multizone-audio.rules.template $(RENDER)
+	$(RENDER) -z $* -d $< templates/70-multizone-audio.rules.template > $@
+
 
 snapserver: $(output_dir)/snapserver.conf
 	systemctl $(SYSTEMCTL_USER) restart snapserver
